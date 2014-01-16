@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+	<file alias="keyboard.qml">../../qml/keyboard.qml</file>
+	<file alias="Btn.qml">../../qml/Btn.qml</file>
+</qresource>
+</RCC>
