@@ -32,6 +32,8 @@ private:
 class LayoutItem: public BaseLayoutItem
 {
 Q_OBJECT
+Q_PROPERTY(int cols MEMBER m_cols WRITE setCols NOTIFY colsChanged)
+Q_PROPERTY(int rows MEMBER m_rows WRITE setRows NOTIFY rowsChanged)
 public:
 	explicit LayoutItem(QQuickItem *parent = 0);
 	~LayoutItem();
@@ -39,17 +41,24 @@ public:
 	void addButton(ButtonItem *button);
 	void clearButtons();
 
+	void setCols(int cols);
+	void setRows(int rows);
+
 	static LayoutItemAttached *qmlAttachedProperties(QObject *object);
+
+private:
+	void setColsSimple(int cols);
+	void setRowsSimple(int rows);
+
+signals:
+	void colsChanged(int cols);
+	void rowsChanged(int rows);
 
 protected:
 	virtual void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
 	virtual void mouseMoveEvent(QMouseEvent *event);
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual void mouseReleaseEvent(QMouseEvent *event);
-
-private:
-	void setCols(int cols);
-	void setRows(int rows);
 
 	static int layoutProperty(const ButtonItem *button, const char *property, int fallback);
 
@@ -60,6 +69,7 @@ private slots:
 private:
 	int m_rows;
 	int m_cols;
+	bool m_autoSize;
 }; /* -----  end of class LayoutItem  ----- */
 
 QML_DECLARE_TYPEINFO(LayoutItem, QML_HAS_ATTACHED_PROPERTIES)

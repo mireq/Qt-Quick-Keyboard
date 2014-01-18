@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 	qmlRegisterType<KeyboardItem>("QuickKeyboard", 1, 0, "Keyboard");
 	qmlRegisterType<ModeItem>("QuickKeyboard", 1, 0, "Mode");
 	qmlRegisterType<ButtonItem>("QuickKeyboard", 1, 0, "Button");
+	qmlRegisterType<BaseLayoutItem>();
 	qmlRegisterType<LayoutItemAttached>();
 	qmlRegisterType<LayoutItem>("QuickKeyboard", 1, 0, "Layout");
 

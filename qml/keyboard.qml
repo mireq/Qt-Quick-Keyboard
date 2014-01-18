@@ -6,6 +6,7 @@ Keyboard {
 	Mode {
 		id: standard
 		anchors.fill: parent
+		layout: Layout{ rows: 10; cols: 10 }
 		Btn{ col: 0; row: 0; label: "A"; symbols: ["A"] }
 		Btn{ col: 3; row: 3; label: "B"; symbols: ["B"] }
 		Btn{ col: 5; row: 5; label: "C"; symbols: ["C"] }

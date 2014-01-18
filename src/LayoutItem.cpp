@@ -2,6 +2,8 @@
 #include "ButtonItem.h"
 #include "LayoutItem.h"
 
+#include <QDebug>
+
 LayoutItemAttached::LayoutItemAttached(QObject *parent):
 	QObject(parent),
 	m_col(0),
@@ -18,7 +20,8 @@ LayoutItemAttached::~LayoutItemAttached()
 LayoutItem::LayoutItem(QQuickItem *parent):
 	BaseLayoutItem(parent),
 	m_rows(0),
-	m_cols(0)
+	m_cols(0),
+	m_autoSize(true)
 {
 	setFlag(QQuickItem::ItemHasContents);
 	setAcceptedMouseButtons(Qt::LeftButton);
@@ -31,8 +34,10 @@ LayoutItem::~LayoutItem()
 void LayoutItem::addButton(ButtonItem *button)
 {
 	BaseLayoutItem::addButton(button);
-	setRows(qMax(m_rows, layoutProperty(button, "row", 0) + layoutProperty(button, "rowSpan", 1)));
-	setCols(qMax(m_cols, layoutProperty(button, "col", 0) + layoutProperty(button, "colSpan", 1)));
+	if (m_autoSize) {
+		setRowsSimple(qMax(m_rows, layoutProperty(button, "row", 0) + layoutProperty(button, "rowSpan", 1)));
+		setColsSimple(qMax(m_cols, layoutProperty(button, "col", 0) + layoutProperty(button, "colSpan", 1)));
+	}
 
 	QObject *layoutAttached = qmlAttachedPropertiesObject<LayoutItem>(button);
 	if (layoutAttached) {
@@ -54,14 +59,48 @@ void LayoutItem::clearButtons()
 			disconnect(layoutAttached, SIGNAL(rowSpanChanged(int)), this, SLOT(recalculateRowColSize()));
 		}
 	}
+	if (m_autoSize) {
+		setRowsSimple(0);
+		setColsSimple(0);
+	}
 	BaseLayoutItem::clearButtons();
-	setRows(0);
-	setCols(0);
+}
+
+void LayoutItem::setCols(int cols)
+{
+	m_autoSize = false;
+	setColsSimple(cols);
+}
+
+void LayoutItem::setRows(int rows)
+{
+	m_autoSize = false;
+	setRowsSimple(rows);
 }
 
 LayoutItemAttached *LayoutItem::qmlAttachedProperties(QObject *object)
 {
 	return new LayoutItemAttached(object);
+}
+
+void LayoutItem::setColsSimple(int cols)
+{
+	if (m_cols == cols) {
+		return;
+	}
+
+	m_cols = cols;
+	recalculatePositions();
+}
+
+void LayoutItem::setRowsSimple(int rows)
+{
+	if (m_rows == rows) {
+		return;
+	}
+
+	m_rows = rows;
+	recalculatePositions();
 }
 
 void LayoutItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
@@ -85,26 +124,6 @@ void LayoutItem::mouseReleaseEvent(QMouseEvent *event)
 	event->accept();
 }
 
-void LayoutItem::setCols(int cols)
-{
-	if (m_cols == cols) {
-		return;
-	}
-
-	m_cols = cols;
-	recalculatePositions();
-}
-
-void LayoutItem::setRows(int rows)
-{
-	if (m_rows == rows) {
-		return;
-	}
-
-	m_rows = rows;
-	recalculatePositions();
-}
-
 int LayoutItem::layoutProperty(const ButtonItem *button, const char *property, int fallback)
 {
 	QObject *layoutAttached = qmlAttachedPropertiesObject<LayoutItem>(button);
@@ -116,14 +135,17 @@ int LayoutItem::layoutProperty(const ButtonItem *button, const char *property, i
 
 void LayoutItem::recalculateRowColSize()
 {
+	if (!m_autoSize) {
+		return;
+	}
 	int rows = 0;
 	int cols = 0;
 	foreach (const ButtonItem *button, buttons()) {
 		rows = qMax(layoutProperty(button, "row", 0) + layoutProperty(button, "rowSpan", 1), rows);
 		cols = qMax(layoutProperty(button, "col", 0) + layoutProperty(button, "colSpan", 1), cols);
 	}
-	setRows(rows);
-	setCols(cols);
+	setRowsSimple(rows);
+	setColsSimple(cols);
 }
 
 void LayoutItem::recalculatePositions()
