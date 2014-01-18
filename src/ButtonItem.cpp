@@ -7,8 +7,10 @@ ButtonItem::ButtonItem(QQuickItem *parent):
 	m_col(0),
 	m_row(0),
 	m_colSpan(1),
-	m_rowSpan(1)
+	m_rowSpan(1),
+	m_currentSymbolIndex(-1)
 {
+	connect(this, SIGNAL(symbolsChanged(const QStringList &)), SLOT(onSymbolsChanged()));
 }
 
 ButtonItem::~ButtonItem()
@@ -25,3 +27,31 @@ void ButtonItem::setActive(bool active)
 	emit activeChanged(active);
 }
 
+void ButtonItem::setCurrentSymbolIndex(int currentSymbolIndex)
+{
+	if (m_symbols.length() == 0) {
+		currentSymbolIndex = -1;
+	}
+	if (currentSymbolIndex == -1 && m_symbols.length() > 0) {
+		currentSymbolIndex = 0;
+	}
+
+	if (currentSymbolIndex == m_currentSymbolIndex) {
+		return;
+	}
+
+	m_currentSymbolIndex = currentSymbolIndex;
+	emit currentSymbolIndexChanged(currentSymbolIndex);
+}
+
+void ButtonItem::onSymbolsChanged()
+{
+	if (m_symbols.length() == 0) {
+		setCurrentSymbolIndex(-1);
+	}
+	else {
+		if (m_currentSymbolIndex < 0 || m_currentSymbolIndex >= m_symbols.length()) {
+			setCurrentSymbolIndex(0);
+		}
+	}
+}

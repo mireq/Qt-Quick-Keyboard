@@ -11,6 +11,7 @@ Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged DESIGN
 Q_PROPERTY(bool modifier MEMBER m_modifier READ isModifier NOTIFY modifierChanged DESIGNABLE false)
 Q_PROPERTY(QString label MEMBER m_label READ label NOTIFY labelChanged)
 Q_PROPERTY(QStringList symbols MEMBER m_symbols READ symbols NOTIFY symbolsChanged)
+Q_PROPERTY(int currentSymbolIndex MEMBER m_currentSymbolIndex WRITE setCurrentSymbolIndex NOTIFY currentSymbolIndexChanged)
 
 // position
 Q_PROPERTY(int col MEMBER m_col NOTIFY colChanged)
@@ -27,6 +28,7 @@ public:
 	QStringList symbols() const { return m_symbols; };
 
 	void setActive(bool active);
+	void setCurrentSymbolIndex(int currentSymbolIndex);
 
 signals:
 	void activeChanged(bool is_active);
@@ -39,7 +41,11 @@ signals:
 	void colSpanChanged(int colSpan);
 	void rowSpanChanged(int rowSpan);
 
+	void currentSymbolIndexChanged(int index);
 	void triggered();
+
+private slots:
+	void onSymbolsChanged();
 
 private:
 	bool m_active;
@@ -50,6 +56,7 @@ private:
 	int m_row;
 	int m_colSpan;
 	int m_rowSpan;
+	int m_currentSymbolIndex;
 }; /* -----  end of class ButtonItem  ----- */
 
 #endif /* end of include guard: BUTTONITEM_H_VNF1QLCU */
