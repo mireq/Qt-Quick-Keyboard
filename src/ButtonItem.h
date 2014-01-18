@@ -7,10 +7,10 @@
 class ButtonItem: public QQuickItem
 {
 Q_OBJECT
-Q_PROPERTY(bool pressed MEMBER m_pressed NOTIFY pressedChanged DESIGNABLE false)
-Q_PROPERTY(bool modifier MEMBER m_modifier NOTIFY modifierChanged DESIGNABLE false)
-Q_PROPERTY(QString label MEMBER m_label NOTIFY labelChanged)
-Q_PROPERTY(QStringList symbols MEMBER m_symbols NOTIFY symbolsChanged)
+Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged DESIGNABLE false)
+Q_PROPERTY(bool modifier MEMBER m_modifier READ isModifier NOTIFY modifierChanged DESIGNABLE false)
+Q_PROPERTY(QString label MEMBER m_label READ label NOTIFY labelChanged)
+Q_PROPERTY(QStringList symbols MEMBER m_symbols READ symbols NOTIFY symbolsChanged)
 
 // position
 Q_PROPERTY(int col MEMBER m_col NOTIFY colChanged)
@@ -21,8 +21,15 @@ public:
 	explicit ButtonItem(QQuickItem *parent = 0);
 	~ButtonItem();
 
+	bool isActive() const { return m_active; };
+	bool isModifier() const { return m_modifier; };
+	QString label() const { return m_label; };
+	QStringList symbols() const { return m_symbols; };
+
+	void setActive(bool active);
+
 signals:
-	void pressedChanged(bool is_pressed);
+	void activeChanged(bool is_active);
 	void modifierChanged(bool is_modifier);
 	void labelChanged(const QString &label);
 	void symbolsChanged(const QStringList &symbols);
@@ -32,8 +39,10 @@ signals:
 	void colSpanChanged(int colSpan);
 	void rowSpanChanged(int rowSpan);
 
+	void triggered();
+
 private:
-	bool m_pressed;
+	bool m_active;
 	bool m_modifier;
 	QString m_label;
 	QStringList m_symbols;

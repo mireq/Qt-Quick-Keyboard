@@ -24,7 +24,9 @@ LayoutItem::LayoutItem(QQuickItem *parent):
 	m_autoSize(true)
 {
 	setFlag(QQuickItem::ItemHasContents);
+	setKeepTouchGrab(true);
 	setAcceptedMouseButtons(Qt::LeftButton);
+	m_touchPositions << QPointF();
 }
 
 LayoutItem::~LayoutItem()
@@ -93,6 +95,20 @@ void LayoutItem::setColsSimple(int cols)
 	recalculatePositions();
 }
 
+void LayoutItem::synchronizeActivePoints()
+{
+	foreach (ButtonItem *button, buttons()) {
+		bool buttonActive = button->isActive();
+		bool pointActive = checkActive(button);
+		if (buttonActive && !pointActive) {
+			button->setActive(false);
+		}
+		if (!buttonActive && pointActive) {
+			button->setActive(true);
+		}
+	}
+}
+
 void LayoutItem::setRowsSimple(int rows)
 {
 	if (m_rows == rows) {
@@ -103,25 +119,90 @@ void LayoutItem::setRowsSimple(int rows)
 	recalculatePositions();
 }
 
+void LayoutItem::triggerOnPosition(int x, int y)
+{
+	QPointF point(x, y);
+	foreach (ButtonItem *button, buttons()) {
+		if (button->contains(button->mapFromScene(point))) {
+			emit button->triggered();
+		}
+	}
+}
+
+void LayoutItem::setMousePosition(const QPointF &position)
+{
+	m_touchPositions[0] = position;
+	synchronizeActivePoints();
+}
+
+void LayoutItem::setTouchPositions(const QList<QPointF> &positions)
+{
+	m_touchPositions = QList<QPointF>() << m_touchPositions[0];
+	m_touchPositions += positions;
+	synchronizeActivePoints();
+}
+
+bool LayoutItem::checkActive(const ButtonItem *button) const
+{
+	foreach (const QPointF &point, m_touchPositions) {
+		if (!point.isNull()) {
+			if (button->contains(button->mapFromScene(point))) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 void LayoutItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
 	BaseLayoutItem::geometryChanged(newGeometry, oldGeometry);
 	recalculatePositions();
 }
 
+void LayoutItem::touchEvent(QTouchEvent *event)
+{
+	QVector<QPointF> points;
+	points.reserve(event->touchPoints().length());
+	foreach (const QTouchEvent::TouchPoint &point, event->touchPoints()) {
+		points << point.scenePos();
+	}
+	setTouchPositions(points.toList());
+
+	QVector<QPointF> pointsAfterRelease;
+	pointsAfterRelease.reserve(event->touchPoints().length());
+	foreach (const QTouchEvent::TouchPoint &point, event->touchPoints()) {
+		if (point.state() == Qt::TouchPointReleased) {
+			pointsAfterRelease << QPointF();
+			triggerOnPosition(point.rect().x(), point.rect().y());
+		}
+		else {
+			pointsAfterRelease << point.pos().toPoint();
+		}
+	}
+
+	if (points != pointsAfterRelease) {
+		setTouchPositions(pointsAfterRelease.toList());
+	}
+}
+
 void LayoutItem::mouseMoveEvent(QMouseEvent *event)
 {
-	QQuickItem::mouseMoveEvent(event);
+	event->accept();
+	setMousePosition(QPointF(event->x(), event->y()));
 }
 
 void LayoutItem::mousePressEvent(QMouseEvent *event)
 {
 	event->accept();
+	setMousePosition(QPointF(event->x(), event->y()));
 }
 
 void LayoutItem::mouseReleaseEvent(QMouseEvent *event)
 {
 	event->accept();
+	triggerOnPosition(event->x(), event->y());
+	setMousePosition(QPointF());
 }
 
 int LayoutItem::layoutProperty(const ButtonItem *button, const char *property, int fallback)

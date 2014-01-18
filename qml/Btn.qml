@@ -14,4 +14,5 @@ Button {
 		color: "green"
 		anchors.fill: parent
 	}
+	onTriggered: console.log(label)
 }

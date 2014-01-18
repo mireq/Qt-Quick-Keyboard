@@ -1,6 +1,8 @@
 #ifndef LAYOUTITEM_H_KEQWS1DN
 #define LAYOUTITEM_H_KEQWS1DN
 
+
+#include <QList>
 #include "BaseLayoutItem.h"
 
 
@@ -50,16 +52,27 @@ private:
 	void setColsSimple(int cols);
 	void setRowsSimple(int rows);
 
+	void synchronizeActivePoints();
+
+	void triggerOnPosition(int x, int y);
+
+	void setMousePosition(const QPointF &position);
+	void setTouchPositions(const QList<QPointF> &positions);
+
+	bool checkActive(const ButtonItem *button) const;
+
 signals:
 	void colsChanged(int cols);
 	void rowsChanged(int rows);
 
 protected:
 	virtual void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
+	virtual void touchEvent(QTouchEvent *event);
 	virtual void mouseMoveEvent(QMouseEvent *event);
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual void mouseReleaseEvent(QMouseEvent *event);
 
+private:
 	static int layoutProperty(const ButtonItem *button, const char *property, int fallback);
 
 private slots:
@@ -70,6 +83,8 @@ private:
 	int m_rows;
 	int m_cols;
 	bool m_autoSize;
+
+	QList<QPointF> m_touchPositions;
 }; /* -----  end of class LayoutItem  ----- */
 
 QML_DECLARE_TYPEINFO(LayoutItem, QML_HAS_ATTACHED_PROPERTIES)
