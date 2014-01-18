@@ -123,7 +123,8 @@ void LayoutItem::triggerOnPosition(int x, int y)
 {
 	QPointF point(x, y);
 	foreach (ButtonItem *button, buttons()) {
-		if (button->contains(button->mapFromScene(point))) {
+		QPointF mapped = button->mapFromScene(point);
+		if (mapped.x() >= 0.0f && mapped.y() >= 0.0f && mapped.x() < button->width() && mapped.y() < button->height()) {
 			emit button->triggered();
 		}
 	}
@@ -146,7 +147,8 @@ bool LayoutItem::checkActive(const ButtonItem *button) const
 {
 	foreach (const QPointF &point, m_touchPositions) {
 		if (!point.isNull()) {
-			if (button->contains(button->mapFromScene(point))) {
+			QPointF mapped = button->mapFromScene(point);
+			if (mapped.x() >= 0.0f && mapped.y() >= 0.0f && mapped.x() < button->width() && mapped.y() < button->height()) {
 				return true;
 			}
 		}
@@ -174,7 +176,7 @@ void LayoutItem::touchEvent(QTouchEvent *event)
 	foreach (const QTouchEvent::TouchPoint &point, event->touchPoints()) {
 		if (point.state() == Qt::TouchPointReleased) {
 			pointsAfterRelease << QPointF();
-			triggerOnPosition(point.rect().x(), point.rect().y());
+			triggerOnPosition(point.pos().x(), point.pos().y());
 		}
 		else {
 			pointsAfterRelease << point.pos().toPoint();
@@ -189,19 +191,21 @@ void LayoutItem::touchEvent(QTouchEvent *event)
 void LayoutItem::mouseMoveEvent(QMouseEvent *event)
 {
 	event->accept();
-	setMousePosition(QPointF(event->x(), event->y()));
+	setMousePosition(mapToScene(QPointF(event->x(), event->y())));
 }
 
 void LayoutItem::mousePressEvent(QMouseEvent *event)
 {
 	event->accept();
-	setMousePosition(QPointF(event->x(), event->y()));
+	setMousePosition(mapToScene(QPointF(event->x(), event->y())));
 }
 
 void LayoutItem::mouseReleaseEvent(QMouseEvent *event)
 {
 	event->accept();
-	triggerOnPosition(event->x(), event->y());
+	QPointF point(event->x(), event->y());
+	point = mapToScene(point);
+	triggerOnPosition(point.x(), point.y());
 	setMousePosition(QPointF());
 }
 
