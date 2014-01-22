@@ -26,6 +26,7 @@ GridLayoutItem::GridLayoutItem(QQuickItem *parent):
 	setFlag(QQuickItem::ItemHasContents);
 	setKeepTouchGrab(true);
 	setAcceptedMouseButtons(Qt::LeftButton);
+	setZ(-1);
 	m_touchPositions << QPointF();
 }
 
