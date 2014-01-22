@@ -4,12 +4,12 @@
 #include <QQuickItem>
 #include <QList>
 class ButtonItem;
-class BaseLayoutItem;
+class LayoutItem;
 
 class ModeItem: public QQuickItem
 {
 Q_OBJECT
-Q_PROPERTY(BaseLayoutItem* layout READ layout WRITE setLayout NOTIFY layoutChanged)
+Q_PROPERTY(LayoutItem* layout READ layout WRITE setLayout NOTIFY layoutChanged)
 Q_PROPERTY(QQmlListProperty<ButtonItem> buttons READ buttons DESIGNABLE false)
 Q_CLASSINFO("DefaultProperty", "buttons")
 public:
@@ -17,8 +17,8 @@ public:
 	~ModeItem();
 
 	// layout property
-	BaseLayoutItem *layout() const;
-	void setLayout(BaseLayoutItem *layout);
+	LayoutItem *layout() const;
+	void setLayout(LayoutItem *layout);
 
 	// buttons property
 	QQmlListProperty<ButtonItem> buttons();
@@ -28,12 +28,12 @@ public:
 	static void buttons_clear(QQmlListProperty<ButtonItem> *property);
 
 signals:
-	void layoutChanged(BaseLayoutItem *layout);
+	void layoutChanged(LayoutItem *layout);
 	void colsChanged(int cols);
 	void rowsChanged(int rows);
 
 private:
-	BaseLayoutItem *m_layout;
+	LayoutItem *m_layout;
 	QList<ButtonItem *> m_buttons;
 	int m_cols;
 	int m_rows;

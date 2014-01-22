@@ -25,7 +25,7 @@ Item {
 
 		Mode {
 			id: standard
-			layout: Layout{ rows: 8; cols: 20 }
+			layout: GridLayout{ rows: 8; cols: 20 }
 			anchors.fill: parent
 			anchors.topMargin: 11
 
@@ -62,9 +62,9 @@ Item {
 			Btn { col: 16; row: 4; label: "´"; }
 			Btn { col: 18; row: 4; label: "ˇ"; }
 
-			Btn { col:  0; row: 6; Layout.colSpan: 5; label: "123"; }
-			Btn { col:  5; row: 6; Layout.colSpan: 10; label: "Space"; }
-			Btn { col: 15; row: 6; Layout.colSpan: 5; label: "⏎"; }
+			Btn { col:  0; row: 6; GridLayout.colSpan: 5; label: "123"; }
+			Btn { col:  5; row: 6; GridLayout.colSpan: 10; label: "Space"; }
+			Btn { col: 15; row: 6; GridLayout.colSpan: 5; label: "⏎"; }
 
 		}
 	}

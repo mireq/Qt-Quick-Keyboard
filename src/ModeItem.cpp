@@ -14,12 +14,12 @@ ModeItem::~ModeItem()
 {
 }
 
-BaseLayoutItem *ModeItem::layout() const
+LayoutItem *ModeItem::layout() const
 {
 	return m_layout;
 }
 
-void ModeItem::setLayout(BaseLayoutItem *layout)
+void ModeItem::setLayout(LayoutItem *layout)
 {
 	if (m_layout == layout) {
 		return;
