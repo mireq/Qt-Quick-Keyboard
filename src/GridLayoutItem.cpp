@@ -197,21 +197,18 @@ void GridLayoutItem::touchEvent(QTouchEvent *event)
 
 void GridLayoutItem::mouseMoveEvent(QMouseEvent *event)
 {
-	event->accept();
 	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
 	setMousePosition(scenePos);
 }
 
 void GridLayoutItem::mousePressEvent(QMouseEvent *event)
 {
-	event->accept();
 	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
 	setMousePosition(scenePos);
 }
 
 void GridLayoutItem::mouseReleaseEvent(QMouseEvent *event)
 {
-	event->accept();
 	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
 	triggerOnPosition(scenePos);
 	setMousePosition(QPointF());
