@@ -154,7 +154,7 @@ bool GridLayoutItem::checkActive(const ButtonItem *button) const
 	return false;
 }
 
-inline bool GridLayoutItem::checkButtonAtPoint(const ButtonItem *button, const QPointF &pos)
+inline bool GridLayoutItem::checkButtonAtPoint(const ButtonItem *button, const QPointF &point)
 {
 	QPointF mapped = button->mapFromScene(point);
 	if (mapped.x() >= 0.0f && mapped.y() >= 0.0f && mapped.x() < button->width() && mapped.y() < button->height()) {
