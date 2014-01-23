@@ -61,7 +61,7 @@ private:
 
 	bool checkActive(const ButtonItem *button) const;
 
-	static bool checkButtonAtPoint(const ButtonItem *button, const QPointF &pos);
+	static bool checkButtonAtPoint(const ButtonItem *button, const QPointF &point);
 
 signals:
 	void colsChanged(int cols);

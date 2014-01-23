@@ -35,4 +35,10 @@ Button {
 		horizontalAlignment: Text.AlignHCenter
 	}
 	onTriggered: console.log(label)
+
+	Timer {
+		interval: 800
+		running: active
+		onTriggered: console.log("chars")
+	}
 }
