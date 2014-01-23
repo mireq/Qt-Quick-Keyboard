@@ -26,7 +26,7 @@ GridLayoutItem::GridLayoutItem(QQuickItem *parent):
 	setFlag(QQuickItem::ItemHasContents);
 	setKeepTouchGrab(true);
 	setAcceptedMouseButtons(Qt::LeftButton);
-	setZ(-1);
+	setZ(1);
 	m_touchPositions << QPointF();
 }
 
@@ -120,12 +120,10 @@ void GridLayoutItem::setRowsSimple(int rows)
 	recalculatePositions();
 }
 
-void GridLayoutItem::triggerOnPosition(int x, int y)
+void GridLayoutItem::triggerOnPosition(const QPointF &point)
 {
-	QPointF point(x, y);
 	foreach (ButtonItem *button, buttons()) {
-		QPointF mapped = button->mapFromScene(point);
-		if (mapped.x() >= 0.0f && mapped.y() >= 0.0f && mapped.x() < button->width() && mapped.y() < button->height()) {
+		if (checkButtonAtPoint(button, point)) {
 			emit button->triggered();
 		}
 	}
@@ -148,11 +146,19 @@ bool GridLayoutItem::checkActive(const ButtonItem *button) const
 {
 	foreach (const QPointF &point, m_touchPositions) {
 		if (!point.isNull()) {
-			QPointF mapped = button->mapFromScene(point);
-			if (mapped.x() >= 0.0f && mapped.y() >= 0.0f && mapped.x() < button->width() && mapped.y() < button->height()) {
+			if (checkButtonAtPoint(button, point)) {
 				return true;
 			}
 		}
+	}
+	return false;
+}
+
+inline bool GridLayoutItem::checkButtonAtPoint(const ButtonItem *button, const QPointF &pos)
+{
+	QPointF mapped = button->mapFromScene(point);
+	if (mapped.x() >= 0.0f && mapped.y() >= 0.0f && mapped.x() < button->width() && mapped.y() < button->height()) {
+		return true;
 	}
 	return false;
 }
@@ -177,7 +183,7 @@ void GridLayoutItem::touchEvent(QTouchEvent *event)
 	foreach (const QTouchEvent::TouchPoint &point, event->touchPoints()) {
 		if (point.state() == Qt::TouchPointReleased) {
 			pointsAfterRelease << QPointF();
-			triggerOnPosition(point.pos().x(), point.pos().y());
+			triggerOnPosition(point.pos());
 		}
 		else {
 			pointsAfterRelease << point.pos().toPoint();
@@ -192,21 +198,22 @@ void GridLayoutItem::touchEvent(QTouchEvent *event)
 void GridLayoutItem::mouseMoveEvent(QMouseEvent *event)
 {
 	event->accept();
-	setMousePosition(mapToScene(QPointF(event->x(), event->y())));
+	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
+	setMousePosition(scenePos);
 }
 
 void GridLayoutItem::mousePressEvent(QMouseEvent *event)
 {
 	event->accept();
-	setMousePosition(mapToScene(QPointF(event->x(), event->y())));
+	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
+	setMousePosition(scenePos);
 }
 
 void GridLayoutItem::mouseReleaseEvent(QMouseEvent *event)
 {
 	event->accept();
-	QPointF point(event->x(), event->y());
-	point = mapToScene(point);
-	triggerOnPosition(point.x(), point.y());
+	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
+	triggerOnPosition(scenePos);
 	setMousePosition(QPointF());
 }
 

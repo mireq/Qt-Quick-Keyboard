@@ -54,12 +54,14 @@ private:
 
 	void synchronizeActivePoints();
 
-	void triggerOnPosition(int x, int y);
+	void triggerOnPosition(const QPointF &point);
 
 	void setMousePosition(const QPointF &position);
 	void setTouchPositions(const QList<QPointF> &positions);
 
 	bool checkActive(const ButtonItem *button) const;
+
+	static bool checkButtonAtPoint(const ButtonItem *button, const QPointF &pos);
 
 signals:
 	void colsChanged(int cols);
