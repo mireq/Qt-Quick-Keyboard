@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QuickKeyboard 1.0
 
+import QtGraphicalEffects 1.0
+
 Item {
 	width: 800; height: 480
 
@@ -8,6 +10,19 @@ Item {
 		id: background
 		source: "qrc:/gfx/keyboard/bg.jpg"
 		anchors.fill: parent
+	}
+
+	ShaderEffectSource {
+		id: bgShader
+		sourceItem: background
+		sourceRect: Qt.rect(keyboard.x, keyboard.y + 11, keyboard.width, keyboard.height - 11)
+	}
+
+	FastBlur {
+		source: bgShader
+		anchors.fill: keyboard
+		anchors.topMargin: 11
+		radius: 32
 	}
 
 	Keyboard {
