@@ -4,6 +4,7 @@
 
 #include <QList>
 #include "LayoutItem.h"
+class GridLayoutItem;
 
 
 class GridLayoutItemAttached: public QObject
@@ -13,9 +14,11 @@ Q_PROPERTY(int col MEMBER m_col NOTIFY colChanged)
 Q_PROPERTY(int row MEMBER m_row NOTIFY rowChanged)
 Q_PROPERTY(int colSpan MEMBER m_colSpan NOTIFY colSpanChanged)
 Q_PROPERTY(int rowSpan MEMBER m_rowSpan NOTIFY rowSpanChanged)
+Q_PROPERTY(GridLayoutItem *layout READ layout)
 public:
 	explicit GridLayoutItemAttached(QObject *parent = 0);
 	~GridLayoutItemAttached();
+	GridLayoutItem *layout() const;
 
 signals:
 	void colChanged(int col);

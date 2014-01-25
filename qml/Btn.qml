@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QuickKeyboard 1.0
 
 Button {
+	id: btn
 	property int row
 	property int col
 	GridLayout.row: row
@@ -39,6 +40,6 @@ Button {
 	Timer {
 		interval: 800
 		running: active
-		onTriggered: console.log("chars")
+		onTriggered: console.log(btn.GridLayout.layout)
 	}
 }

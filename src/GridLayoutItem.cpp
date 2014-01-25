@@ -1,5 +1,6 @@
 #include <QtGlobal>
 #include "ButtonItem.h"
+#include "ModeItem.h"
 #include "GridLayoutItem.h"
 
 #include <QDebug>
@@ -15,6 +16,20 @@ GridLayoutItemAttached::GridLayoutItemAttached(QObject *parent):
 
 GridLayoutItemAttached::~GridLayoutItemAttached()
 {
+}
+
+GridLayoutItem *GridLayoutItemAttached::layout() const
+{
+	QObject *predecessor = parent();
+	ModeItem *mode = 0;
+	while (predecessor != 0) {
+		predecessor = predecessor->parent();
+		mode = qobject_cast<ModeItem *>(predecessor);
+		if (mode) {
+			return qobject_cast<GridLayoutItem *>(mode->layout());
+		}
+	}
+	return 0;
 }
 
 GridLayoutItem::GridLayoutItem(QQuickItem *parent):
