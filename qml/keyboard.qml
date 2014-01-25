@@ -4,31 +4,32 @@ import QuickKeyboard 1.0
 import QtGraphicalEffects 1.0
 
 Item {
+	id: main
 	width: 800; height: 480
 
 	Image {
-		id: background
+		id: content
 		source: "qrc:/gfx/keyboard/bg.jpg"
 		anchors.fill: parent
-	}
-
-	ShaderEffectSource {
-		id: bgShader
-		sourceItem: background
-		sourceRect: Qt.rect(keyboard.x, keyboard.y + 11, keyboard.width, keyboard.height - 11)
-	}
-
-	FastBlur {
-		source: bgShader
-		anchors.fill: keyboard
-		anchors.topMargin: 11
-		radius: 32
 	}
 
 	Keyboard {
 		id: keyboard
 		anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
 		height: Math.round(width / 3)
+
+		ShaderEffectSource {
+			id: contentBlurSource
+			sourceItem: content
+			sourceRect: Qt.rect(keyboard.x, keyboard.y + 11, keyboard.width, keyboard.height - 11)
+		}
+
+		FastBlur {
+			source: contentBlurSource
+			anchors.fill: keyboard
+			anchors.topMargin: 11
+			radius: 32
+		}
 
 		BorderImage {
 			anchors.fill: parent
@@ -82,5 +83,10 @@ Item {
 			Btn { col: 15; row: 6; GridLayout.colSpan: 5; label: "⏎"; }
 
 		}
+	}
+
+	Item {
+		id: keyboardOverlay
+		anchors.fill: keyboard
 	}
 }

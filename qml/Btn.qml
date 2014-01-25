@@ -1,10 +1,13 @@
 import QtQuick 2.0
 import QuickKeyboard 1.0
 
+import QtGraphicalEffects 1.0
+
 Button {
 	id: btn
 	property int row
 	property int col
+	property Item buttonPreview
 	GridLayout.row: row
 	GridLayout.col: col
 	GridLayout.colSpan: 2
@@ -37,35 +40,79 @@ Button {
 	}
 	onTriggered: console.log(label)
 
-	Item {
-		property int centeredX: -width / 2 + btn.width / 2
-		property int minX: -btn.x - 25
-		property int maxX: btn.parent.width - btn.x - width + 25
-		x: Math.max(Math.min(centeredX, maxX), minX)
-		z: 2
-		width: content.width + 60; height: content.height + 60
-		visible: active
-		anchors.bottom: parent.top
-
-		BorderImage {
-			anchors.fill: parent
-			source: "qrc:/gfx/keyboard/preview_bg.png"
-			border { left: 26; top: 26; right: 26; bottom: 26 }
-		}
-
+	Component {
+		id: buttonPreviewComponent
 		Item {
-			id: content
-			x: 30; y: 30
-			height: labelPreview.height; width: Math.max(labelPreview.width, height)
-			Text {
-				id: labelPreview
-				text: label
-				color: "white"
-				font.pixelSize: btn.height
-				font.weight: Font.Bold
-				anchors.horizontalCenter: parent.horizontalCenter
-				style: Text.Raised; styleColor: "#000000"
+			id: preview
+
+			property Item content
+			property Item keyboard
+			property Item btn
+
+			property int centeredX: -width / 2 + btn.width / 2 + btn.x
+			property int minX: - 25
+			property int maxX: btn.parent.width - width + 25
+
+			x: Math.max(Math.min(centeredX, maxX), minX)
+			y: btn.y - height
+			width: buttonContent.width + 60; height: buttonContent.height + 60
+			visible: active
+
+			ShaderEffectSource {
+				id: contentBlurSource
+				sourceItem: content
+				sourceRect: Qt.rect(preview.x + 25, preview.y + keyboardOverlay.y + 25, preview.width - 50, preview.height - 50)
 			}
+
+			FastBlur {
+				source: contentBlurSource
+				anchors.fill: parent
+				anchors.margins: 25
+				radius: 32
+			}
+
+			ShaderEffectSource {
+				id: keyboardBlurSource
+				sourceItem: keyboard
+				sourceRect: Qt.rect(preview.x + 25, preview.y + 25, preview.width - 50, preview.height - 50)
+			}
+
+			FastBlur {
+				source: keyboardBlurSource
+				anchors.fill: parent
+				anchors.margins: 25
+				radius: 32
+			}
+
+			BorderImage {
+				anchors.fill: parent
+				source: "qrc:/gfx/keyboard/preview_bg.png"
+				border { left: 26; top: 26; right: 26; bottom: 26 }
+			}
+
+			Item {
+				id: buttonContent
+				x: 30; y: 30
+				height: labelPreview.height; width: Math.max(labelPreview.width, height)
+				Text {
+					id: labelPreview
+					text: label
+					color: "white"
+					font.pixelSize: btn.height
+					font.weight: Font.Bold
+					anchors.horizontalCenter: parent.horizontalCenter
+					style: Text.Raised; styleColor: "#000000"
+				}
+			}
+		}
+	}
+
+	onActiveChanged: {
+		if (active) {
+			buttonPreview = buttonPreviewComponent.createObject(keyboardOverlay, {"btn": btn, "content": content, "keyboard": keyboard});
+		}
+		else {
+			buttonPreview.destroy();
 		}
 	}
 
