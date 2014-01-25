@@ -2,6 +2,7 @@
 <qresource prefix="/">
 	<file alias="keyboard.qml">../../qml/keyboard.qml</file>
 	<file alias="Btn.qml">../../qml/Btn.qml</file>
+	<file alias="BtnPreview.qml">../../qml/BtnPreview.qml</file>
 	<file alias="gfx/keyboard/bg.jpg">../../gfx/bg.jpg</file>
 	<file alias="gfx/keyboard/keyboard_bg.png">../../gfx/keyboard_bg.png</file>
 	<file alias="gfx/keyboard/preview_bg.png">../../gfx/preview_bg.png</file>
