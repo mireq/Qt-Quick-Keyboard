@@ -17,11 +17,13 @@ Item {
 	property int minX: - backgroundBorder
 	property int maxX: btn.parent.width - width + backgroundBorder
 
+	state: "default"
+
 	x: Math.max(Math.min(centeredX, maxX), minX)
 	y: btn.y - height
 	width: buttonContent.width + backgroundBorder * 2 + padding * 2
 	height: buttonContent.height + backgroundBorder * 2 + padding * 2
-	visible: active
+	visible: previewItems.count + symbolsItems.count > 0
 
 	ShaderEffectSource {
 		id: contentBlurSource
@@ -57,18 +59,87 @@ Item {
 		border { left: borderSize; top: borderSize; right: borderSize; bottom: borderSize }
 	}
 
-	Item {
-		id: buttonContent
-		x: backgroundBorder + padding; y: backgroundBorder + padding
-		height: labelPreview.height; width: Math.max(labelPreview.width, height)
+	Component {
+		id: textPreview
 		Text {
 			id: labelPreview
-			text: label
+			property bool active: (index == currentSymbolIndex) || (currentSymbolIndex == -1)
+			text: modelData
+			width: Math.max(contentWidth, contentHeight)
+			horizontalAlignment: Text.AlignHCenter
 			color: "white"
 			font.pixelSize: btn.height
 			font.weight: Font.Bold
-			anchors.horizontalCenter: parent.horizontalCenter
 			style: Text.Raised; styleColor: "#000000"
+			opacity: active ? 1.0 : 0.6
+			transform: Scale {
+				xScale: active ? 1.0 : 0.6
+				yScale: xScale
+				origin.x: width / 2
+				origin.y: height / 2
+				Behavior on xScale {
+					NumberAnimation {}
+				}
+			}
+		}
+	}
+
+	Item {
+		id: buttonContent
+		x: backgroundBorder + padding; y: backgroundBorder + padding
+		height: chars.height; width: chars.width
+		Row {
+			id: chars
+			Repeater {
+				id: previewItems
+				model: 0
+				delegate: textPreview
+			}
+			Repeater {
+				id: symbolsItems
+				model: 0
+				delegate: textPreview
+			}
+		}
+
+		MouseArea {
+			id: buttonsArea
+			anchors.fill: parent
+			onPressed: preview.state = "symbols"
+			onReleased: btn.triggered()
+			onPositionChanged: {
+				var underMouseIndex = Math.floor(mouse.x * symbolsItems.count / chars.width);
+				if (underMouseIndex < 0) {
+					underMouseIndex = 0;
+				}
+				if (underMouseIndex >= symbolsItems.count) {
+					underMouseIndex = symbolsItems.count - 1;
+				}
+				currentSymbolIndex = underMouseIndex;
+			}
+		}
+	}
+
+	Timer {
+		interval: 800
+		running: active && symbols.length > 1
+		onTriggered: btn.GridLayout.layout.redirectEventsToItem(buttonsArea)
+	}
+
+	states: [
+		State {
+			name: "preview"
+			PropertyChanges { target: previewItems; visible: true; model: [label] }
+		},
+		State {
+			name: "symbols"
+			PropertyChanges { target: symbolsItems; visible: true; model: symbols }
+		}
+	]
+
+	Component.onCompleted: {
+		if (symbols) {
+			state = "preview";
 		}
 	}
 }

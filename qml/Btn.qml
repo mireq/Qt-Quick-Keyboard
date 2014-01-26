@@ -38,7 +38,6 @@ Button {
 		fontSizeMode: Text.Fit
 		horizontalAlignment: Text.AlignHCenter
 	}
-	onTriggered: console.log(label)
 
 	Component {
 		id: buttonPreviewComponent
@@ -52,11 +51,5 @@ Button {
 		else {
 			buttonPreview.destroy();
 		}
-	}
-
-	Timer {
-		interval: 800
-		running: active
-		onTriggered: console.log(btn.GridLayout.layout)
 	}
 }
