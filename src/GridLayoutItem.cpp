@@ -1,4 +1,5 @@
 #include <QtGlobal>
+#include <QQuickWindow>
 #include "ButtonItem.h"
 #include "ModeItem.h"
 #include "GridLayoutItem.h"
@@ -99,6 +100,21 @@ void GridLayoutItem::setRows(int rows)
 GridLayoutItemAttached *GridLayoutItem::qmlAttachedProperties(QObject *object)
 {
 	return new GridLayoutItemAttached(object);
+}
+
+void GridLayoutItem::redirectEventsToItem(QQuickItem *item)
+{
+	if (!item) {
+		return;
+	}
+	ungrabMouse();
+	ungrabTouchPoints();
+
+	if (!m_touchPositions[0].isNull()) {
+		QMouseEvent pressEvent(QMouseEvent::MouseButtonPress, QPointF(0, 0), Qt::LeftButton, Qt::LeftButton, 0);
+		window()->sendEvent(item, &pressEvent);
+		item->grabMouse();
+	}
 }
 
 void GridLayoutItem::setColsSimple(int cols)

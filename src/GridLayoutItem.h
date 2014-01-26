@@ -51,6 +51,9 @@ public:
 
 	static GridLayoutItemAttached *qmlAttachedProperties(QObject *object);
 
+public slots:
+	void redirectEventsToItem(QQuickItem *item);
+
 private:
 	void setColsSimple(int cols);
 	void setRowsSimple(int rows);
