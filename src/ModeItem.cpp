@@ -60,6 +60,7 @@ void ModeItem::buttons_append(QQmlListProperty<ButtonItem> *property, ButtonItem
 	if (that->m_layout) {
 		that->m_layout->addButton(button);
 	}
+	QObject::connect(button, SIGNAL(symbolTriggered(const QString &)), that, SLOT(onSymbolTriggered(const QString &)));
 }
 
 int ModeItem::buttons_count(QQmlListProperty<ButtonItem> *property)
@@ -81,8 +82,13 @@ void ModeItem::buttons_clear(QQmlListProperty<ButtonItem> *property)
 		that->m_layout->clearButtons();
 	}
 	foreach (ButtonItem *button, that->m_buttons) {
+		QObject::disconnect(button, SIGNAL(symbolTriggered(const QString &)), that, SLOT(onSymbolTriggered(const QString &)));
 		button->setParentItem(0);
 	}
 	that->m_buttons.clear();
+}
+
+void ModeItem::onSymbolTriggered(const QString &symbol)
+{
 }
 

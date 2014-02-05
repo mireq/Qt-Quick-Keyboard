@@ -32,6 +32,9 @@ signals:
 	void colsChanged(int cols);
 	void rowsChanged(int rows);
 
+private slots:
+	void onSymbolTriggered(const QString &symbol);
+
 private:
 	LayoutItem *m_layout;
 	QList<ButtonItem *> m_buttons;

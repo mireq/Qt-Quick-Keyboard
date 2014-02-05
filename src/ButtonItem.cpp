@@ -11,6 +11,7 @@ ButtonItem::ButtonItem(QQuickItem *parent):
 	m_currentSymbolIndex(-1)
 {
 	connect(this, SIGNAL(symbolsChanged(const QStringList &)), SLOT(onSymbolsChanged()));
+	connect(this, SIGNAL(triggered()), SLOT(onTriggered()));
 }
 
 ButtonItem::~ButtonItem()
@@ -55,3 +56,13 @@ void ButtonItem::onSymbolsChanged()
 		}
 	}
 }
+
+void ButtonItem::onTriggered()
+{
+	if (m_currentSymbolIndex < 0 || m_currentSymbolIndex >= m_symbols.length()) {
+		return;
+	}
+
+	emit symbolTriggered(m_symbols[m_currentSymbolIndex]);
+}
+
