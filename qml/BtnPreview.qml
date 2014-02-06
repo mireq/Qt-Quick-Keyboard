@@ -124,7 +124,7 @@ Item {
 
 	Timer {
 		interval: 800
-		running: active && symbols.length > 1
+		running: mouseDown && symbols.length > 1
 		onTriggered: btn.GridLayout.layout.redirectEventsToItem(buttonsArea)
 	}
 

@@ -8,6 +8,7 @@ class ButtonItem: public QQuickItem
 {
 Q_OBJECT
 Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged DESIGNABLE false)
+Q_PROPERTY(bool mouseDown READ isMouseDown WRITE setMouseDown NOTIFY mouseDownChanged DESIGNABLE false)
 Q_PROPERTY(bool modifier MEMBER m_modifier READ isModifier NOTIFY modifierChanged DESIGNABLE false)
 Q_PROPERTY(QString label MEMBER m_label READ label NOTIFY labelChanged)
 Q_PROPERTY(QStringList symbols MEMBER m_symbols READ symbols NOTIFY symbolsChanged)
@@ -23,15 +24,19 @@ public:
 	~ButtonItem();
 
 	bool isActive() const { return m_active; };
+	bool isMouseDown() const { return m_mouseDown; };
 	bool isModifier() const { return m_modifier; };
+	bool isStandard() const { return !m_modifier; };
 	QString label() const { return m_label; };
 	QStringList symbols() const { return m_symbols; };
 
 	void setActive(bool active);
+	void setMouseDown(bool mouseDown);
 	void setCurrentSymbolIndex(int currentSymbolIndex);
 
 signals:
 	void activeChanged(bool is_active);
+	void mouseDownChanged(bool mouseDown);
 	void modifierChanged(bool is_modifier);
 	void labelChanged(const QString &label);
 	void symbolsChanged(const QStringList &symbols);
@@ -51,6 +56,7 @@ private slots:
 
 private:
 	bool m_active;
+	bool m_mouseDown;
 	bool m_modifier;
 	QString m_label;
 	QStringList m_symbols;

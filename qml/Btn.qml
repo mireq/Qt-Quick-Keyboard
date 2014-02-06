@@ -18,7 +18,7 @@ Button {
 
 	BorderImage {
 		anchors.fill: parent
-		source: active ? "qrc:/gfx/keyboard/btn_pressed.png" : "qrc:/gfx/keyboard/btn.png"
+		source: mouseDown || active ? "qrc:/gfx/keyboard/btn_pressed.png" : "qrc:/gfx/keyboard/btn.png"
 		border { left: 2; top: 2; right: 2; bottom: 2 }
 	}
 
@@ -45,8 +45,8 @@ Button {
 		BtnPreview {hasPreview: btn.hasPreview}
 	}
 
-	onActiveChanged: {
-		if (active) {
+	onMouseDownChanged: {
+		if (mouseDown) {
 			buttonPreview = buttonPreviewComponent.createObject(keyboardOverlay, {"btn": btn, "content": content, "keyboard": keyboard});
 		}
 		else {

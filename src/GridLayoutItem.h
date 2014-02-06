@@ -64,7 +64,7 @@ private:
 	void setMousePosition(const QPointF &position);
 	void setTouchPositions(const QList<QPointF> &positions);
 
-	bool checkActive(const ButtonItem *button) const;
+	bool checkMouseDown(const ButtonItem *button) const;
 
 	static bool checkButtonAtPoint(const ButtonItem *button, const QPointF &point);
 
@@ -85,7 +85,8 @@ private:
 private slots:
 	void recalculateRowColSize();
 	void recalculatePositions();
-	void synchronizeActivePoints();
+	void synchronizeMouseDownPoints();
+	void setModifiersInactive();
 
 private:
 	int m_rows;

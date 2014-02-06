@@ -3,6 +3,7 @@
 ButtonItem::ButtonItem(QQuickItem *parent):
 	QQuickItem(parent),
 	m_active(false),
+	m_mouseDown(false),
 	m_modifier(false),
 	m_col(0),
 	m_row(0),
@@ -26,6 +27,17 @@ void ButtonItem::setActive(bool active)
 
 	m_active = active;
 	emit activeChanged(active);
+	setCurrentSymbolIndex(0);
+}
+
+void ButtonItem::setMouseDown(bool mouseDown)
+{
+	if (m_mouseDown == mouseDown) {
+		return;
+	}
+
+	m_mouseDown = mouseDown;
+	emit mouseDownChanged(mouseDown);
 	setCurrentSymbolIndex(0);
 }
 

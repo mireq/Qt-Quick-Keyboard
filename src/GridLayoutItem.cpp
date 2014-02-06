@@ -56,7 +56,8 @@ void GridLayoutItem::addButton(ButtonItem *button)
 		setRowsSimple(qMax(m_rows, layoutProperty(button, "row", 0) + layoutProperty(button, "rowSpan", 1)));
 		setColsSimple(qMax(m_cols, layoutProperty(button, "col", 0) + layoutProperty(button, "colSpan", 1)));
 	}
-	connect(button, SIGNAL(triggered()), this, SLOT(synchronizeActivePoints()));
+	connect(button, SIGNAL(triggered()), this, SLOT(synchronizeMouseDownPoints()));
+	connect(button, SIGNAL(triggered()), this, SLOT(setModifiersInactive()));
 
 	QObject *layoutAttached = qmlAttachedPropertiesObject<GridLayoutItem>(button);
 	if (layoutAttached) {
@@ -76,7 +77,8 @@ void GridLayoutItem::clearButtons()
 			disconnect(layoutAttached, SIGNAL(rowChanged(int)), this, SLOT(recalculateRowColSize()));
 			disconnect(layoutAttached, SIGNAL(colSpanChanged(int)), this, SLOT(recalculateRowColSize()));
 			disconnect(layoutAttached, SIGNAL(rowSpanChanged(int)), this, SLOT(recalculateRowColSize()));
-			disconnect(button, SIGNAL(triggered()), this, SLOT(synchronizeActivePoints()));
+			disconnect(button, SIGNAL(triggered()), this, SLOT(synchronizeMouseDownPoints()));
+			disconnect(button, SIGNAL(triggered()), this, SLOT(setModifiersInactive()));
 		}
 	}
 	if (m_autoSize) {
@@ -145,7 +147,13 @@ void GridLayoutItem::triggerOnPosition(const QPointF &point)
 {
 	foreach (ButtonItem *button, buttons()) {
 		if (checkButtonAtPoint(button, point)) {
-			emit button->triggered();
+			bool buttonActive = button->isActive();
+			if (button->isModifier()) {
+				button->setActive(!buttonActive);
+			}
+			if (button->isStandard() || buttonActive) {
+				emit button->triggered();
+			}
 		}
 	}
 }
@@ -153,17 +161,17 @@ void GridLayoutItem::triggerOnPosition(const QPointF &point)
 void GridLayoutItem::setMousePosition(const QPointF &position)
 {
 	m_touchPositions[0] = position;
-	synchronizeActivePoints();
+	synchronizeMouseDownPoints();
 }
 
 void GridLayoutItem::setTouchPositions(const QList<QPointF> &positions)
 {
 	m_touchPositions = QList<QPointF>() << m_touchPositions[0];
 	m_touchPositions += positions;
-	synchronizeActivePoints();
+	synchronizeMouseDownPoints();
 }
 
-bool GridLayoutItem::checkActive(const ButtonItem *button) const
+bool GridLayoutItem::checkMouseDown(const ButtonItem *button) const
 {
 	foreach (const QPointF &point, m_touchPositions) {
 		if (!point.isNull()) {
@@ -289,16 +297,25 @@ void GridLayoutItem::recalculatePositions()
 	}
 }
 
-void GridLayoutItem::synchronizeActivePoints()
+void GridLayoutItem::synchronizeMouseDownPoints()
 {
 	foreach (ButtonItem *button, buttons()) {
-		bool buttonActive = button->isActive();
-		bool pointActive = checkActive(button);
-		if (buttonActive && !pointActive) {
-			button->setActive(false);
+		bool buttonMouseDown = button->isMouseDown();
+		bool pointMouseDown = checkMouseDown(button);
+		if (buttonMouseDown && !pointMouseDown) {
+			button->setMouseDown(false);
 		}
-		if (!buttonActive && pointActive) {
-			button->setActive(true);
+		if (!buttonMouseDown && pointMouseDown) {
+			button->setMouseDown(true);
+		}
+	}
+}
+
+void GridLayoutItem::setModifiersInactive()
+{
+	foreach (ButtonItem *button, buttons()) {
+		if (button->isModifier()) {
+			button->setActive(false);
 		}
 	}
 }
