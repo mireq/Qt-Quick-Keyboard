@@ -30,7 +30,7 @@ Item {
 	ShaderEffectSource {
 		id: contentBlurSource
 		sourceItem: content
-		sourceRect: Qt.rect(preview.x + backgroundBorder, preview.y + keyboardOverlay.y + backgroundBorder, buttonContent.width * 2, buttonContent.height * 2)
+		sourceRect: Qt.rect(preview.x + backgroundBorder, preview.y + keyboardOverlay.y + backgroundBorder, buttonContent.width, buttonContent.height)
 	}
 
 	FastBlur {
