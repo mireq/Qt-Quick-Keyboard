@@ -26,6 +26,7 @@ void ButtonItem::setActive(bool active)
 
 	m_active = active;
 	emit activeChanged(active);
+	setCurrentSymbolIndex(0);
 }
 
 void ButtonItem::setCurrentSymbolIndex(int currentSymbolIndex)
