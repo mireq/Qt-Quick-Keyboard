@@ -6,6 +6,8 @@ import QtGraphicalEffects 1.0
 Item {
 	id: preview
 
+	property bool hasPreview: true
+
 	property Item content
 	property Item keyboard
 	property Item btn
@@ -23,7 +25,7 @@ Item {
 	y: btn.y - height
 	width: buttonContent.width + backgroundBorder * 2 + padding * 2
 	height: buttonContent.height + backgroundBorder * 2 + padding * 2
-	visible: previewItems.count + symbolsItems.count > 0
+	visible: (previewItems.count + symbolsItems.count > 0) && hasPreview
 
 	ShaderEffectSource {
 		id: contentBlurSource

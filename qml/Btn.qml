@@ -8,6 +8,7 @@ Button {
 	property int row
 	property int col
 	property Item buttonPreview
+	property bool hasPreview: true
 	GridLayout.row: row
 	GridLayout.col: col
 	GridLayout.colSpan: 2
@@ -41,7 +42,7 @@ Button {
 
 	Component {
 		id: buttonPreviewComponent
-		BtnPreview {}
+		BtnPreview {hasPreview: btn.hasPreview}
 	}
 
 	onActiveChanged: {
