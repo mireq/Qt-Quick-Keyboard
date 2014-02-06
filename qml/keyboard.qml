@@ -44,6 +44,7 @@ Item {
 			id: standard
 			anchors.fill: parent
 			anchors.topMargin: 11
+			onSymbolsModeChanged: keyboard.mode = symbols
 		}
 
 		Symbols {
