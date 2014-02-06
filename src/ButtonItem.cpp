@@ -28,6 +28,7 @@ void ButtonItem::setActive(bool active)
 
 	m_active = active;
 	emit activeChanged(active);
+	emit pressedChanged(m_active || m_mouseDown);
 	setCurrentSymbolIndex(0);
 }
 
@@ -39,6 +40,7 @@ void ButtonItem::setMouseDown(bool mouseDown)
 
 	m_mouseDown = mouseDown;
 	emit mouseDownChanged(mouseDown);
+	emit pressedChanged(m_active || m_mouseDown);
 	setCurrentSymbolIndex(0);
 }
 

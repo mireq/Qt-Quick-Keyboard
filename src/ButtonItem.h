@@ -7,6 +7,7 @@
 class ButtonItem: public QQuickItem
 {
 Q_OBJECT
+Q_PROPERTY(bool pressed READ isPressed NOTIFY pressedChanged DESIGNABLE false)
 Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged DESIGNABLE false)
 Q_PROPERTY(bool mouseDown READ isMouseDown WRITE setMouseDown NOTIFY mouseDownChanged DESIGNABLE false)
 Q_PROPERTY(bool modifier MEMBER m_modifier READ isModifier NOTIFY modifierChanged DESIGNABLE false)
@@ -23,6 +24,7 @@ public:
 	explicit ButtonItem(QQuickItem *parent = 0);
 	~ButtonItem();
 
+	bool isPressed() const { return m_active || m_mouseDown; };
 	bool isActive() const { return m_active; };
 	bool isMouseDown() const { return m_mouseDown; };
 	bool isModifier() const { return m_modifier; };
@@ -35,6 +37,7 @@ public:
 	void setCurrentSymbolIndex(int currentSymbolIndex);
 
 signals:
+	void pressedChanged(bool is_pressed);
 	void activeChanged(bool is_active);
 	void mouseDownChanged(bool mouseDown);
 	void modifierChanged(bool is_modifier);
