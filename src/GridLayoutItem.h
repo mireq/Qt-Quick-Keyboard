@@ -58,8 +58,7 @@ private:
 	void setColsSimple(int cols);
 	void setRowsSimple(int rows);
 
-	void synchronizeActivePoints();
-
+private:
 	void triggerOnPosition(const QPointF &point);
 
 	void setMousePosition(const QPointF &position);
@@ -86,6 +85,7 @@ private:
 private slots:
 	void recalculateRowColSize();
 	void recalculatePositions();
+	void synchronizeActivePoints();
 
 private:
 	int m_rows;

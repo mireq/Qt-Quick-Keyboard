@@ -56,6 +56,7 @@ void GridLayoutItem::addButton(ButtonItem *button)
 		setRowsSimple(qMax(m_rows, layoutProperty(button, "row", 0) + layoutProperty(button, "rowSpan", 1)));
 		setColsSimple(qMax(m_cols, layoutProperty(button, "col", 0) + layoutProperty(button, "colSpan", 1)));
 	}
+	connect(button, SIGNAL(triggered()), this, SLOT(synchronizeActivePoints()));
 
 	QObject *layoutAttached = qmlAttachedPropertiesObject<GridLayoutItem>(button);
 	if (layoutAttached) {
@@ -75,6 +76,7 @@ void GridLayoutItem::clearButtons()
 			disconnect(layoutAttached, SIGNAL(rowChanged(int)), this, SLOT(recalculateRowColSize()));
 			disconnect(layoutAttached, SIGNAL(colSpanChanged(int)), this, SLOT(recalculateRowColSize()));
 			disconnect(layoutAttached, SIGNAL(rowSpanChanged(int)), this, SLOT(recalculateRowColSize()));
+			disconnect(button, SIGNAL(triggered()), this, SLOT(synchronizeActivePoints()));
 		}
 	}
 	if (m_autoSize) {
@@ -114,6 +116,9 @@ void GridLayoutItem::redirectEventsToItem(QQuickItem *item)
 		window()->sendEvent(item, &pressEvent);
 		item->grabMouse();
 	}
+
+	m_touchPositions.clear();
+	m_touchPositions << QPointF();
 }
 
 void GridLayoutItem::setColsSimple(int cols)
@@ -124,20 +129,6 @@ void GridLayoutItem::setColsSimple(int cols)
 
 	m_cols = cols;
 	recalculatePositions();
-}
-
-void GridLayoutItem::synchronizeActivePoints()
-{
-	foreach (ButtonItem *button, buttons()) {
-		bool buttonActive = button->isActive();
-		bool pointActive = checkActive(button);
-		if (buttonActive && !pointActive) {
-			button->setActive(false);
-		}
-		if (!buttonActive && pointActive) {
-			button->setActive(true);
-		}
-	}
 }
 
 void GridLayoutItem::setRowsSimple(int rows)
@@ -295,6 +286,20 @@ void GridLayoutItem::recalculatePositions()
 		button->setProperty("y", y);
 		button->setProperty("width", right * w / m_cols - x);
 		button->setProperty("height", bottom * h / m_rows - y);
+	}
+}
+
+void GridLayoutItem::synchronizeActivePoints()
+{
+	foreach (ButtonItem *button, buttons()) {
+		bool buttonActive = button->isActive();
+		bool pointActive = checkActive(button);
+		if (buttonActive && !pointActive) {
+			button->setActive(false);
+		}
+		if (!buttonActive && pointActive) {
+			button->setActive(true);
+		}
 	}
 }
 
