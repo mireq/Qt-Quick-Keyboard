@@ -44,13 +44,14 @@ Item {
 			id: standard
 			anchors.fill: parent
 			anchors.topMargin: 11
-			onSymbolsModeChanged: keyboard.mode = symbols
+			onSymbolsModeSwitched: keyboard.mode = symbols
 		}
 
 		Symbols {
 			id: symbols
 			anchors.fill: parent
 			anchors.topMargin: 11
+			onStandardModeSwitched: keyboard.mode = standard
 		}
 	}
 

@@ -3,7 +3,7 @@ import QuickKeyboard 1.0
 import ".."
 
 Mode {
-	signal symbolsModeChanged
+	signal symbolsModeSwitched
 
 	layout: GridLayout{ rows: 8; cols: 20 }
 	Btn { col:  0; row: 0; label: "Q";
@@ -43,7 +43,7 @@ Mode {
 	Btn { col: 16; row: 4; label: "´"; id: acute; modifier: true; hasPreview: false }
 	Btn { col: 18; row: 4; label: "ˇ"; id: caron; modifier: true; hasPreview: false }
 
-	Btn { col:  0; row: 6; GridLayout.colSpan: 5; label: "123"; onTriggered: symbolsModeChanged(); hasPreview: false }
+	Btn { col:  0; row: 6; GridLayout.colSpan: 5; label: "123"; onTriggered: symbolsModeSwitched(); hasPreview: false }
 	Btn { col:  5; row: 6; GridLayout.colSpan: 10; label: "Space"; hasPreview: false }
 	Btn { col: 15; row: 6; GridLayout.colSpan: 5; label: "⏎"; hasPreview: false }
 }
