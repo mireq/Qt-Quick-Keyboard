@@ -67,7 +67,7 @@ Item {
 			id: labelPreview
 			property bool active: (index == currentSymbolIndex) || (currentSymbolIndex == -1)
 			text: modelData.label == undefined ? modelData : modelData.label
-			width: Math.max(contentWidth, contentHeight) / (modelData.label == undefined ? 1.25 : 1.0)
+			width: Math.max(contentWidth, contentHeight) / (modelData.label == undefined ? 1.4 : 1.0)
 			horizontalAlignment: Text.AlignHCenter
 			color: "white"
 			font.pixelSize: btn.height
