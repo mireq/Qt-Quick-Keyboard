@@ -3,6 +3,8 @@
 	<file alias="keyboard.qml">../../qml/keyboard.qml</file>
 	<file alias="Btn.qml">../../qml/Btn.qml</file>
 	<file alias="BtnPreview.qml">../../qml/BtnPreview.qml</file>
+	<file alias="modes/Standard.qml">../../qml/modes/Standard.qml</file>
+	<file alias="modes/Symbols.qml">../../qml/modes/Symbols.qml</file>
 	<file alias="gfx/keyboard/bg.jpg">../../gfx/bg.jpg</file>
 	<file alias="gfx/keyboard/keyboard_bg.png">../../gfx/keyboard_bg.png</file>
 	<file alias="gfx/keyboard/preview_bg.png">../../gfx/preview_bg.png</file>
