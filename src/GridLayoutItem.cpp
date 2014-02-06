@@ -147,13 +147,7 @@ void GridLayoutItem::triggerOnPosition(const QPointF &point)
 {
 	foreach (ButtonItem *button, buttons()) {
 		if (checkButtonAtPoint(button, point)) {
-			bool buttonActive = button->isActive();
-			if (button->isModifier()) {
-				button->setActive(!buttonActive);
-			}
-			if (button->isStandard() || buttonActive) {
-				emit button->triggered();
-			}
+			emit button->released();
 		}
 	}
 }

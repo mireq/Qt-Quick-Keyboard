@@ -13,6 +13,7 @@ ButtonItem::ButtonItem(QQuickItem *parent):
 {
 	connect(this, SIGNAL(symbolsChanged(const QStringList &)), SLOT(onSymbolsChanged()));
 	connect(this, SIGNAL(triggered()), SLOT(onTriggered()));
+	connect(this, SIGNAL(released()), SLOT(onReleased()));
 }
 
 ButtonItem::~ButtonItem()
@@ -77,5 +78,16 @@ void ButtonItem::onTriggered()
 	}
 
 	emit symbolTriggered(m_symbols[m_currentSymbolIndex]);
+}
+
+void ButtonItem::onReleased()
+{
+	bool active = m_active;
+	if (m_modifier) {
+		setActive(!active);
+	}
+	if (isStandard() || active) {
+		emit triggered();
+	}
 }
 

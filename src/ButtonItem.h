@@ -48,11 +48,13 @@ signals:
 
 	void currentSymbolIndexChanged(int index);
 	void triggered();
+	void released();
 	void symbolTriggered(const QString &symbol);
 
 private slots:
 	void onSymbolsChanged();
 	void onTriggered();
+	void onReleased();
 
 private:
 	bool m_active;
