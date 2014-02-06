@@ -34,6 +34,7 @@ signals:
 
 private slots:
 	void onSymbolTriggered(const QString &symbol);
+	void setModifiersInactive();
 
 private:
 	LayoutItem *m_layout;

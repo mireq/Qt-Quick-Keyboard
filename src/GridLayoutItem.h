@@ -86,7 +86,6 @@ private slots:
 	void recalculateRowColSize();
 	void recalculatePositions();
 	void synchronizeMouseDownPoints();
-	void setModifiersInactive();
 
 private:
 	int m_rows;

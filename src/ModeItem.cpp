@@ -62,6 +62,7 @@ void ModeItem::buttons_append(QQmlListProperty<ButtonItem> *property, ButtonItem
 		that->m_layout->addButton(button);
 	}
 	QObject::connect(button, SIGNAL(symbolTriggered(const QString &)), that, SLOT(onSymbolTriggered(const QString &)));
+	QObject::connect(button, SIGNAL(triggered()), that, SLOT(setModifiersInactive()));
 }
 
 int ModeItem::buttons_count(QQmlListProperty<ButtonItem> *property)
@@ -84,6 +85,7 @@ void ModeItem::buttons_clear(QQmlListProperty<ButtonItem> *property)
 	}
 	foreach (ButtonItem *button, that->m_buttons) {
 		QObject::disconnect(button, SIGNAL(symbolTriggered(const QString &)), that, SLOT(onSymbolTriggered(const QString &)));
+		QObject::disconnect(button, SIGNAL(triggered()), that, SLOT(setModifiersInactive()));
 		button->setParentItem(0);
 	}
 	that->m_buttons.clear();
@@ -91,5 +93,14 @@ void ModeItem::buttons_clear(QQmlListProperty<ButtonItem> *property)
 
 void ModeItem::onSymbolTriggered(const QString &symbol)
 {
+}
+
+void ModeItem::setModifiersInactive()
+{
+	foreach (ButtonItem *button, m_buttons) {
+		if (button->isModifier()) {
+			button->setActive(false);
+		}
+	}
 }
 

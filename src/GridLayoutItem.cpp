@@ -57,7 +57,6 @@ void GridLayoutItem::addButton(ButtonItem *button)
 		setColsSimple(qMax(m_cols, layoutProperty(button, "col", 0) + layoutProperty(button, "colSpan", 1)));
 	}
 	connect(button, SIGNAL(triggered()), this, SLOT(synchronizeMouseDownPoints()));
-	connect(button, SIGNAL(triggered()), this, SLOT(setModifiersInactive()));
 
 	QObject *layoutAttached = qmlAttachedPropertiesObject<GridLayoutItem>(button);
 	if (layoutAttached) {
@@ -78,7 +77,6 @@ void GridLayoutItem::clearButtons()
 			disconnect(layoutAttached, SIGNAL(colSpanChanged(int)), this, SLOT(recalculateRowColSize()));
 			disconnect(layoutAttached, SIGNAL(rowSpanChanged(int)), this, SLOT(recalculateRowColSize()));
 			disconnect(button, SIGNAL(triggered()), this, SLOT(synchronizeMouseDownPoints()));
-			disconnect(button, SIGNAL(triggered()), this, SLOT(setModifiersInactive()));
 		}
 	}
 	if (m_autoSize) {
@@ -301,15 +299,6 @@ void GridLayoutItem::synchronizeMouseDownPoints()
 		}
 		if (!buttonMouseDown && pointMouseDown) {
 			button->setMouseDown(true);
-		}
-	}
-}
-
-void GridLayoutItem::setModifiersInactive()
-{
-	foreach (ButtonItem *button, buttons()) {
-		if (button->isModifier()) {
-			button->setActive(false);
 		}
 	}
 }
