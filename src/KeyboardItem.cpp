@@ -16,7 +16,12 @@ void KeyboardItem::setMode(ModeItem *mode)
 		return;
 	}
 
+	if (m_mode) {
+		m_mode->setVisible(false);
+	}
+
 	m_mode = mode;
+	mode->setVisible(true);
 	emit modeChanged(m_mode);
 }
 

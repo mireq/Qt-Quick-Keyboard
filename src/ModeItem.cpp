@@ -7,6 +7,7 @@ ModeItem::ModeItem(QQuickItem *parent):
 	QQuickItem(parent),
 	m_layout(0)
 {
+	setVisible(false);
 	setLayout(new LayoutItem());
 }
 
