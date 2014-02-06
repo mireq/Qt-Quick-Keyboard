@@ -66,8 +66,8 @@ Item {
 		Text {
 			id: labelPreview
 			property bool active: (index == currentSymbolIndex) || (currentSymbolIndex == -1)
-			text: modelData
-			width: Math.max(contentWidth, contentHeight)
+			text: modelData.label == undefined ? modelData : modelData.label
+			width: Math.max(contentWidth, contentHeight) / (modelData.label == undefined ? 1.25 : 1.0)
 			horizontalAlignment: Text.AlignHCenter
 			color: "white"
 			font.pixelSize: btn.height
@@ -131,7 +131,7 @@ Item {
 	states: [
 		State {
 			name: "preview"
-			PropertyChanges { target: previewItems; visible: true; model: [label] }
+			PropertyChanges { target: previewItems; visible: true; model: [{'label': label}] }
 		},
 		State {
 			name: "symbols"
