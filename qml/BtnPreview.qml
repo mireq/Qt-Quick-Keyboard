@@ -22,7 +22,7 @@ Item {
 	state: "default"
 
 	x: Math.max(Math.min(centeredX, maxX), minX)
-	y: btn.y - height
+	y: btn.y - height + backgroundBorder
 	width: buttonContent.width + backgroundBorder * 2 + padding * 2
 	height: buttonContent.height + backgroundBorder * 2 + padding * 2
 	visible: (previewItems.count + symbolsItems.count > 0) && hasPreview
