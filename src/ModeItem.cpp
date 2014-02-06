@@ -1,6 +1,6 @@
 #include <QChildEvent>
 #include "ButtonItem.h"
-#include "LayoutItem.h"
+#include "GridLayoutItem.h"
 #include "ModeItem.h"
 
 ModeItem::ModeItem(QQuickItem *parent):
@@ -8,7 +8,7 @@ ModeItem::ModeItem(QQuickItem *parent):
 	m_layout(0)
 {
 	setVisible(false);
-	setLayout(new LayoutItem());
+	setLayout(new GridLayoutItem());
 }
 
 ModeItem::~ModeItem()
