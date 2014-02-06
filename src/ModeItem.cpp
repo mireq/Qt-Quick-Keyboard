@@ -91,6 +91,14 @@ void ModeItem::buttons_clear(QQmlListProperty<ButtonItem> *property)
 	that->m_buttons.clear();
 }
 
+void ModeItem::itemChange(ItemChange change, const ItemChangeData &value)
+{
+	QQuickItem::itemChange(change, value);
+	if (change == QQuickItem::ItemVisibleHasChanged && !isVisible()) {
+		setModifiersInactive();
+	}
+}
+
 void ModeItem::onSymbolTriggered(const QString &symbol)
 {
 }

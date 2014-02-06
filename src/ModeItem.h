@@ -32,6 +32,9 @@ signals:
 	void colsChanged(int cols);
 	void rowsChanged(int rows);
 
+protected:
+	virtual void itemChange(ItemChange change, const ItemChangeData &value);
+
 private slots:
 	void onSymbolTriggered(const QString &symbol);
 	void setModifiersInactive();
