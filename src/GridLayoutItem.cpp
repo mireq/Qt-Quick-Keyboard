@@ -4,7 +4,6 @@
 #include "ModeItem.h"
 #include "GridLayoutItem.h"
 
-#include <QDebug>
 
 GridLayoutItemAttached::GridLayoutItemAttached(QObject *parent):
 	QObject(parent),
