@@ -19,7 +19,7 @@ Mode {
 	Btn { col:  4; row: 0; label: "E";
 		symbols: shift.pressed ?
 			acute.pressed ? ["É"] : (caron.pressed ? ["Ě"] : ["E", "Ẽ", "Ě", "Ê", "Ĕ", "Ę", "È", "Ė", "É", "Ë", "Ȩ"]) :
-			acute.pressed ? ["é"] : (caron.pressed ? ["ě"] : ["e", "ě", "ê", "ĕ", "ę", "è", "ė", "é", "ë", "ȩ", "|"])
+			acute.pressed ? ["é"] : (caron.pressed ? ["ě"] : ["e", "ě", "ê", "ĕ", "ę", "è", "ė", "é", "ë", "ȩ", "€"])
 	}
 	Btn { col:  6; row: 0; label: "R";
 		symbols: shift.pressed ?
