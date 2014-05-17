@@ -177,7 +177,7 @@ bool GridLayoutItem::checkMouseDown(const ButtonItem *button) const
 
 inline bool GridLayoutItem::checkButtonAtPoint(const ButtonItem *button, const QPointF &point)
 {
-	QPointF mapped = button->mapFromScene(point);
+	QPointF mapped = point - QPointF(button->x(), button->y());
 	if (mapped.x() >= 0.0f && mapped.y() >= 0.0f && mapped.x() < button->width() && mapped.y() < button->height()) {
 		return true;
 	}
@@ -218,19 +218,19 @@ void GridLayoutItem::touchEvent(QTouchEvent *event)
 
 void GridLayoutItem::mouseMoveEvent(QMouseEvent *event)
 {
-	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
+	QPointF scenePos = QPointF(event->x(), event->y());
 	setMousePosition(scenePos);
 }
 
 void GridLayoutItem::mousePressEvent(QMouseEvent *event)
 {
-	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
+	QPointF scenePos = QPointF(event->x(), event->y());
 	setMousePosition(scenePos);
 }
 
 void GridLayoutItem::mouseReleaseEvent(QMouseEvent *event)
 {
-	QPointF scenePos = mapToScene(QPointF(event->x(), event->y()));
+	QPointF scenePos = QPointF(event->x(), event->y());
 	triggerOnPosition(scenePos);
 	setMousePosition(QPointF());
 }
