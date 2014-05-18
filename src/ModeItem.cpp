@@ -61,7 +61,7 @@ void ModeItem::buttons_append(QQmlListProperty<ButtonItem> *property, ButtonItem
 	if (that->m_layout) {
 		that->m_layout->addButton(button);
 	}
-	QObject::connect(button, SIGNAL(symbolTriggered(const QString &)), that, SLOT(onSymbolTriggered(const QString &)));
+	QObject::connect(button, SIGNAL(symbolTriggered(const QString &)), that, SIGNAL(symbolTriggered(const QString &)));
 	QObject::connect(button, SIGNAL(triggered()), that, SLOT(setModifiersInactive()));
 }
 
@@ -84,7 +84,7 @@ void ModeItem::buttons_clear(QQmlListProperty<ButtonItem> *property)
 		that->m_layout->clearButtons();
 	}
 	foreach (ButtonItem *button, that->m_buttons) {
-		QObject::disconnect(button, SIGNAL(symbolTriggered(const QString &)), that, SLOT(onSymbolTriggered(const QString &)));
+		QObject::disconnect(button, SIGNAL(symbolTriggered(const QString &)), that, SIGNAL(symbolTriggered(const QString &)));
 		QObject::disconnect(button, SIGNAL(triggered()), that, SLOT(setModifiersInactive()));
 		button->setParentItem(0);
 	}
@@ -97,10 +97,6 @@ void ModeItem::itemChange(ItemChange change, const ItemChangeData &value)
 	if (change == QQuickItem::ItemVisibleHasChanged && !isVisible()) {
 		setModifiersInactive();
 	}
-}
-
-void ModeItem::onSymbolTriggered(const QString &symbol)
-{
 }
 
 void ModeItem::setModifiersInactive()

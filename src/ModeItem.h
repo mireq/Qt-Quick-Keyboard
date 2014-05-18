@@ -31,12 +31,12 @@ signals:
 	void layoutChanged(LayoutItem *layout);
 	void colsChanged(int cols);
 	void rowsChanged(int rows);
+	void symbolTriggered(const QString &symbol);
 
 protected:
 	virtual void itemChange(ItemChange change, const ItemChangeData &value);
 
 private slots:
-	void onSymbolTriggered(const QString &symbol);
 	void setModifiersInactive();
 
 private:

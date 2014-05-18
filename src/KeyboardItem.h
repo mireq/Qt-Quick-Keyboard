@@ -18,6 +18,9 @@ public:
 signals:
 	void modeChanged(ModeItem *mode);
 
+private slots:
+	void onSymbolTriggered(const QString &symbol);
+
 private:
 	ModeItem *m_mode;
 }; /* -----  end of class KeyboardItem  ----- */
