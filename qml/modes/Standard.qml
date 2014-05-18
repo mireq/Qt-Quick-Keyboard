@@ -100,7 +100,7 @@ Mode {
 			acute.pressed ? ["Ĺ"] : (caron.pressed ? ["Ľ"] : ["L", "Ľ", "Ŀ", "Ĺ", "Ļ", "Ł"]) :
 			acute.pressed ? ["ĺ"] : (caron.pressed ? ["ľ"] : ["l", "ľ", "ŀ", "ĺ", "ļ", "Ł"])
 	}
-	Btn { col: 18; row: 2; label: "⇦"; hasPreview: false }
+	Btn { col: 18; row: 2; label: "⇦"; hasPreview: false; symbols: ["\x7f"] }
 
 	Btn { col:  0; row: 4; label: "⇧"; id: shift; modifier: true; hasPreview: false }
 	Btn { col:  2; row: 4; label: "Z";
@@ -144,5 +144,5 @@ Mode {
 		symbols: shift.pressed ?
 			[",", ".", ":", ";", "!", "?"] : [".", ",", ":", ";", "!", "?"]
 	}
-	Btn { col: 17; row: 6; GridLayout.colSpan: 3; label: "⏎"; hasPreview: false }
+	Btn { col: 17; row: 6; GridLayout.colSpan: 3; label: "⏎"; hasPreview: false; symbols: "\n" }
 }
