@@ -2,6 +2,7 @@
 #include <QQuickView>
 #include <QUrl>
 #include "../../src/KeyboardItem.h"
+#include "../../src/Dispatcher.h"
 #include "../../src/ModeItem.h"
 #include "../../src/ButtonItem.h"
 #include "../../src/GridLayoutItem.h"
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
 	qmlRegisterType<KeyboardItem>("QuickKeyboard", 1, 0, "Keyboard");
 	qmlRegisterType<ModeItem>("QuickKeyboard", 1, 0, "Mode");
 	qmlRegisterType<ButtonItem>("QuickKeyboard", 1, 0, "Button");
+	qmlRegisterType<Dispatcher>("QuickKeyboard", 1, 0, "Dispatcher");
 	qmlRegisterType<LayoutItem>();
 	qmlRegisterType<GridLayoutItemAttached>();
 	qmlRegisterType<GridLayoutItem>("QuickKeyboard", 1, 0, "GridLayout");

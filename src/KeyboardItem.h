@@ -3,12 +3,15 @@
 
 #include <QQuickItem>
 #include <QList>
-#include "ModeItem.h"
+
+class ModeItem;
+class Dispatcher;
 
 class KeyboardItem: public QQuickItem
 {
 Q_OBJECT
 Q_PROPERTY(ModeItem* mode MEMBER m_mode WRITE setMode NOTIFY modeChanged DESIGNABLE false)
+Q_PROPERTY(Dispatcher* dispatcher MEMBER m_dispatcher)
 public:
 	explicit KeyboardItem(QQuickItem *parent = 0);
 	~KeyboardItem();
@@ -23,6 +26,7 @@ private slots:
 
 private:
 	ModeItem *m_mode;
+	Dispatcher *m_dispatcher;
 }; /* -----  end of class KeyboardItem  ----- */
 
 #endif /* end of include guard: KEYBOARDITEM_H_PT4SCIAV */

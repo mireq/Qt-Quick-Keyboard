@@ -1,8 +1,11 @@
+#include "Dispatcher.h"
+#include "ModeItem.h"
 #include "KeyboardItem.h"
 
 KeyboardItem::KeyboardItem(QQuickItem *parent):
 	QQuickItem(parent),
-	m_mode(0)
+	m_mode(0),
+	m_dispatcher(new Dispatcher(this))
 {
 }
 
@@ -31,5 +34,10 @@ void KeyboardItem::setMode(ModeItem *mode)
 
 void KeyboardItem::onSymbolTriggered(const QString &symbol)
 {
+	if (!m_dispatcher) {
+		return;
+	}
+
+	m_dispatcher->sendSymbol(symbol);
 }
 
