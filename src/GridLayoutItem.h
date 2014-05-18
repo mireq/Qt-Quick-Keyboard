@@ -4,8 +4,11 @@
 
 #include <QList>
 #include "LayoutItem.h"
-class GridLayoutItem;
 
+namespace QuickKeyboard
+{
+
+class GridLayoutItem;
 
 class GridLayoutItemAttached: public QObject
 {
@@ -14,7 +17,7 @@ Q_PROPERTY(int col MEMBER m_col NOTIFY colChanged)
 Q_PROPERTY(int row MEMBER m_row NOTIFY rowChanged)
 Q_PROPERTY(int colSpan MEMBER m_colSpan NOTIFY colSpanChanged)
 Q_PROPERTY(int rowSpan MEMBER m_rowSpan NOTIFY rowSpanChanged)
-Q_PROPERTY(GridLayoutItem *layout READ layout)
+Q_PROPERTY(QuickKeyboard::GridLayoutItem *layout READ layout)
 public:
 	explicit GridLayoutItemAttached(QObject *parent = 0);
 	~GridLayoutItemAttached();
@@ -95,7 +98,9 @@ private:
 	QList<QPointF> m_touchPositions;
 }; /* -----  end of class GridLayoutItem  ----- */
 
-QML_DECLARE_TYPEINFO(GridLayoutItem, QML_HAS_ATTACHED_PROPERTIES)
+} /* QuickKeyboard */
+
+QML_DECLARE_TYPEINFO(QuickKeyboard::GridLayoutItem, QML_HAS_ATTACHED_PROPERTIES)
 
 #endif /* end of include guard: GRIDLAYOUTITEM_H_KEQWS1DN */
 

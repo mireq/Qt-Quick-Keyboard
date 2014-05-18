@@ -4,6 +4,9 @@
 #include <QQuickItem>
 #include <QStringList>
 
+namespace QuickKeyboard
+{
+
 class ButtonItem: public QQuickItem
 {
 Q_OBJECT
@@ -71,6 +74,8 @@ private:
 	int m_rowSpan;
 	int m_currentSymbolIndex;
 }; /* -----  end of class ButtonItem  ----- */
+
+} /* QuickKeyboard */
 
 #endif /* end of include guard: BUTTONITEM_H_VNF1QLCU */
 

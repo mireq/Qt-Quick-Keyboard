@@ -2,6 +2,9 @@
 #include "ModeItem.h"
 #include "KeyboardItem.h"
 
+namespace QuickKeyboard
+{
+
 KeyboardItem::KeyboardItem(QQuickItem *parent):
 	QQuickItem(parent),
 	m_mode(0),
@@ -40,4 +43,6 @@ void KeyboardItem::onSymbolTriggered(const QString &symbol)
 
 	m_dispatcher->sendSymbol(symbol);
 }
+
+} /* QuickKeyboard */
 

@@ -1,6 +1,9 @@
 #include "ButtonItem.h"
 #include "LayoutItem.h"
 
+namespace QuickKeyboard
+{
+
 LayoutItem::LayoutItem(QQuickItem *parent):
 	QQuickItem(parent)
 {
@@ -24,4 +27,6 @@ const QList<ButtonItem *> &LayoutItem::buttons() const
 {
 	return m_buttons;
 }
+
+} /* QuickKeyboard */
 

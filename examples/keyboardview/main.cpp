@@ -11,13 +11,13 @@ int main(int argc, char *argv[])
 {
 	QGuiApplication app(argc, argv);
 
-	qmlRegisterType<KeyboardItem>("QuickKeyboard", 1, 0, "Keyboard");
-	qmlRegisterType<ModeItem>("QuickKeyboard", 1, 0, "Mode");
-	qmlRegisterType<ButtonItem>("QuickKeyboard", 1, 0, "Button");
-	qmlRegisterType<Dispatcher>("QuickKeyboard", 1, 0, "Dispatcher");
-	qmlRegisterType<LayoutItem>();
-	qmlRegisterType<GridLayoutItemAttached>();
-	qmlRegisterType<GridLayoutItem>("QuickKeyboard", 1, 0, "GridLayout");
+	qmlRegisterType<QuickKeyboard::KeyboardItem>("QuickKeyboard", 1, 0, "Keyboard");
+	qmlRegisterType<QuickKeyboard::ModeItem>("QuickKeyboard", 1, 0, "Mode");
+	qmlRegisterType<QuickKeyboard::ButtonItem>("QuickKeyboard", 1, 0, "Button");
+	qmlRegisterType<QuickKeyboard::Dispatcher>("QuickKeyboard", 1, 0, "Dispatcher");
+	qmlRegisterType<QuickKeyboard::LayoutItem>();
+	qmlRegisterType<QuickKeyboard::GridLayoutItemAttached>();
+	qmlRegisterType<QuickKeyboard::GridLayoutItem>("QuickKeyboard", 1, 0, "GridLayout");
 
 	QQuickView view;
 	view.setResizeMode(QQuickView::SizeRootObjectToView);

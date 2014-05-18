@@ -3,14 +3,18 @@
 
 #include <QQuickItem>
 #include <QList>
+
+namespace QuickKeyboard
+{
+
 class ButtonItem;
 class LayoutItem;
 
 class ModeItem: public QQuickItem
 {
 Q_OBJECT
-Q_PROPERTY(LayoutItem* layout READ layout WRITE setLayout NOTIFY layoutChanged)
-Q_PROPERTY(QQmlListProperty<ButtonItem> buttons READ buttons DESIGNABLE false)
+Q_PROPERTY(QuickKeyboard::LayoutItem* layout READ layout WRITE setLayout NOTIFY layoutChanged)
+Q_PROPERTY(QQmlListProperty<QuickKeyboard::ButtonItem> buttons READ buttons DESIGNABLE false)
 Q_CLASSINFO("DefaultProperty", "buttons")
 public:
 	explicit ModeItem(QQuickItem *parent = 0);
@@ -45,6 +49,8 @@ private:
 	int m_cols;
 	int m_rows;
 }; /* -----  end of class ModeItem  ----- */
+
+} /* QuickKeyboard */
 
 #endif /* end of include guard: MODEITEM_H_6ZH81LSX */
 

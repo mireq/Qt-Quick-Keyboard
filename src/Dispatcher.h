@@ -3,6 +3,9 @@
 
 #include <QObject>
 
+namespace QuickKeyboard
+{
+
 class Dispatcher: public QObject
 {
 Q_OBJECT
@@ -20,6 +23,8 @@ private:
 	QObject *m_focusObject;
 	bool m_sendReturnKey;
 }; /* -----  end of class Dispatcher  ----- */
+
+} /* QuickKeyboard */
 
 #endif /* end of include guard: DISPATCHER_H_4JJ7SBUO */
 

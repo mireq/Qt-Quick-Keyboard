@@ -6,6 +6,8 @@
 #include <QWindow>
 #include "Dispatcher.h"
 
+namespace QuickKeyboard
+{
 
 Dispatcher::Dispatcher(QObject *parent):
 	QObject(parent),
@@ -62,4 +64,6 @@ void Dispatcher::sendSymbol(const QString &symbol)
 	}
 	QCoreApplication::sendEvent(m_focusObject, &ev);
 }
+
+} /* QuickKeyboard */
 

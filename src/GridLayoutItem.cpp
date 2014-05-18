@@ -4,6 +4,8 @@
 #include "ModeItem.h"
 #include "GridLayoutItem.h"
 
+namespace QuickKeyboard
+{
 
 GridLayoutItemAttached::GridLayoutItemAttached(QObject *parent):
 	QObject(parent),
@@ -302,4 +304,6 @@ void GridLayoutItem::synchronizeMouseDownPoints()
 		}
 	}
 }
+
+} /* QuickKeyboard */
 

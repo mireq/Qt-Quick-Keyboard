@@ -1,5 +1,8 @@
 #include "ButtonItem.h"
 
+namespace QuickKeyboard
+{
+
 ButtonItem::ButtonItem(QQuickItem *parent):
 	QQuickItem(parent),
 	m_active(false),
@@ -92,4 +95,6 @@ void ButtonItem::onReleased()
 		emit triggered();
 	}
 }
+
+} /* QuickKeyboard */
 
