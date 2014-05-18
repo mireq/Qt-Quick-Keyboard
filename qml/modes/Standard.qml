@@ -115,7 +115,7 @@ Mode {
 	Btn { col:  6; row: 4; label: "C";
 		symbols: shift.pressed ?
 			acute.pressed ? ["Ć"] : (caron.pressed ? ["Č"] : ["C", "Č", "Ĉ", "Ċ", "Ć", "Ç", "©"]) :
-			acute.pressed ? ["ć"] : (caron.pressed ? ["č"] : ["C", "č", "ĉ", "ċ", "ć", "ç", "&"])
+			acute.pressed ? ["ć"] : (caron.pressed ? ["č"] : ["c", "č", "ĉ", "ċ", "ć", "ç", "&"])
 	}
 	Btn { col:  8; row: 4; label: "V";
 		symbols: shift.pressed ?
