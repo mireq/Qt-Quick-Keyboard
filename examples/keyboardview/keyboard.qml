@@ -14,10 +14,32 @@ Item {
 		anchors.fill: parent
 	}
 
+	BorderImage {
+		source: "qrc:/gfx/keyboard/panel_bg.png"
+		height: childrenRect.height + 40
+		border { left: 9; top: 9; right: 9; bottom: 9 }
+		anchors {
+			left: parent.left
+			right: parent.right
+			top: parent.top
+			margins: 20
+		}
+
+		TextEdit {
+			id: textInput
+			font.pixelSize: 30
+			color: "white"
+			anchors { left: parent.left; right: parent.right; top: parent.top; margins: 20 }
+			clip: true
+		}
+	}
+
 	Keyboard {
 		id: keyboard
 		anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
 		height: Math.round(width / 3)
+
+		Component.onCompleted: keyboard.dispatcher.setFocusObject(textInput)
 
 		ShaderEffectSource {
 			id: contentBlurSource

@@ -7,6 +7,7 @@
 	<file alias="modes/Symbols.qml">../../qml/modes/Symbols.qml</file>
 	<file alias="gfx/keyboard/bg.jpg">../../gfx/bg.jpg</file>
 	<file alias="gfx/keyboard/keyboard_bg.png">../../gfx/keyboard_bg.png</file>
+	<file alias="gfx/keyboard/panel_bg.png">../../gfx/panel_bg.png</file>
 	<file alias="gfx/keyboard/preview_bg.png">../../gfx/preview_bg.png</file>
 	<file alias="gfx/keyboard/btn.png">../../gfx/btn.png</file>
 	<file alias="gfx/keyboard/btn_pressed.png">../../gfx/btn_pressed.png</file>
