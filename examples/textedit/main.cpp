@@ -4,8 +4,16 @@
 
 int main(int argc, char *argv[])
 {
+	QString libPath;
+	{
+		QCoreApplication a(argc, argv);
+		QStringList path = QGuiApplication::applicationDirPath().split("/");
+		path.pop_back();
+		path.pop_back();
+		libPath = path.join("/");
+	}
+	QGuiApplication::addLibraryPath(libPath);
 	QGuiApplication app(argc, argv);
-	app.addLibraryPath(app.applicationDirPath() + "/../../");
 	QQuickView view;
 	view.setSource(QUrl("qrc:/example.qml"));
 	view.show();
