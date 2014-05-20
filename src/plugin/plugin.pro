@@ -10,10 +10,13 @@ DEFINES += QUICKKEYBOARD_LIBRARY
 include($$PWD/../components.pri)
 
 HEADERS += global.h \
+	InputContextEmbedded.h \
 	InputContextPlugin.h \
 	InputContext.h
-SOURCES += InputContextPlugin.cpp \
+SOURCES += InputContextEmbedded.cpp \
+	InputContextPlugin.cpp \
 	InputContext.cpp
+RESOURCES += resources.qrc
 
 target.path = $$[QT_INSTALL_PLUGINS]/platforminputcontexts
 INSTALLS += target

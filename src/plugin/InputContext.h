@@ -2,6 +2,7 @@
 #define INPUTCONTEXT_CPP_Q5U7KLYO
 
 #include <qpa/qplatforminputcontext.h>
+#include <QPointer>
 
 class InputContext: public QPlatformInputContext
 {
@@ -11,7 +12,6 @@ public:
 	~InputContext();
 
 	bool isValid() const;
-	QRectF keyboardRect() const;
 
 	void showInputPanel();
 	void hideInputPanel();
@@ -20,6 +20,7 @@ public:
 
 private:
 	bool m_visible;
+	QPointer<QObject> m_focusObject;
 }; /* -----  end of class InputContext  ----- */
 
 #endif /* end of include guard: INPUTCONTEXT_CPP_Q5U7KLYO */
