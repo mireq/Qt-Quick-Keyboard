@@ -18,6 +18,9 @@ public:
 	bool isInputPanelVisible() const;
 	void setFocusObject(QObject *object);
 
+signals:
+	void focusObjectChanged(QObject *object);
+
 private:
 	bool m_visible;
 	QPointer<QObject> m_focusObject;

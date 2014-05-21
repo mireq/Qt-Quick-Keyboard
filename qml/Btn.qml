@@ -18,7 +18,7 @@ Button {
 
 	BorderImage {
 		anchors.fill: parent
-		source: mouseDown || active ? "qrc:/gfx/keyboard/btn_pressed.png" : "qrc:/gfx/keyboard/btn.png"
+		source: mouseDown || active ? "qrc:/gfx/quickkeyboard/btn_pressed.png" : "qrc:/gfx/quickkeyboard/btn.png"
 		border { left: 2; top: 2; right: 2; bottom: 2 }
 	}
 
@@ -47,7 +47,7 @@ Button {
 
 	onMouseDownChanged: {
 		if (mouseDown) {
-			buttonPreview = buttonPreviewComponent.createObject(keyboardOverlay, {"btn": btn, "content": content, "keyboard": keyboard});
+			buttonPreview = buttonPreviewComponent.createObject(keyboardOverlay, {"btn": btn, "content": typeof(content) == "undefined" ? undefined: content, "keyboard": keyboard});
 		}
 		else {
 			buttonPreview.destroy();

@@ -3,13 +3,19 @@
 #include <QQuickItem>
 #include <QRectF>
 #include <QUrl>
+#include "../Dispatcher.h"
+#include "../KeyboardItem.h"
+#include "../register.h"
 
 #include "InputContextEmbedded.h"
 
 InputContextEmbedded::InputContextEmbedded():
 	InputContext(),
-	m_component(0)
+	m_component(0),
+	m_keyboard(0)
 {
+	registerQmlTypes();
+	connect(this, SIGNAL(focusObjectChanged(QObject*)), this, SLOT(onFocusObjectChanged(QObject*)));
 }
 
 InputContextEmbedded::~InputContextEmbedded()
@@ -36,11 +42,13 @@ void InputContextEmbedded::showInputPanel()
 		}
 	}
 	InputContext::showInputPanel();
+	updateVisibility();
 }
 
 void InputContextEmbedded::hideInputPanel()
 {
 	InputContext::hideInputPanel();
+	updateVisibility();
 }
 
 void InputContextEmbedded::embedKeyboard()
@@ -50,14 +58,32 @@ void InputContextEmbedded::embedKeyboard()
 		return;
 	}
 
-	QQuickItem *keyboard = qobject_cast<QQuickItem *>(m_component->create(m_focusWindow->rootContext()));
-	if (!keyboard) {
+	m_keyboard = qobject_cast<QQuickItem *>(m_component->beginCreate(m_focusWindow->rootContext()));
+	if (!m_keyboard) {
 		qWarning() << "Root component is not QQuickItem";
+		m_component->completeCreate();
 		return;
 	}
 	QQuickItem *rootObject = m_focusWindow->rootObject();
 
-	keyboard->setParent(rootObject);
-	keyboard->setParentItem(rootObject);
+	m_keyboard->setProperty("parent", QVariant::fromValue(qobject_cast<QQuickItem *>(m_focusWindow->rootObject())));
+	m_keyboard->setParent(rootObject);
+	m_keyboard->setParentItem(rootObject);
+	updateVisibility();
+
+	m_component->completeCreate();
+}
+
+void InputContextEmbedded::onFocusObjectChanged(QObject *focusObject)
+{
+	if (m_keyboard) {
+		QuickKeyboard::KeyboardItem *kbd = m_keyboard->findChild<QuickKeyboard::KeyboardItem *>("QuickKeyboard");
+		kbd->dispatcher()->setFocusObject(focusObject);
+	}
+}
+
+void InputContextEmbedded::updateVisibility()
+{
+	m_keyboard->setProperty("isVisible", isInputPanelVisible());
 }
 

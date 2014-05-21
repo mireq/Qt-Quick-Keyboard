@@ -10,6 +10,7 @@ KeyboardItem::KeyboardItem(QQuickItem *parent):
 	m_mode(0),
 	m_dispatcher(new Dispatcher(this))
 {
+	setObjectName("QuickKeyboard");
 }
 
 KeyboardItem::~KeyboardItem()
@@ -33,6 +34,11 @@ void KeyboardItem::setMode(ModeItem *mode)
 		connect(mode, SIGNAL(symbolTriggered(const QString &)), this, SLOT(onSymbolTriggered(const QString &)));
 	}
 	emit modeChanged(m_mode);
+}
+
+Dispatcher *KeyboardItem::dispatcher() const
+{
+	return m_dispatcher;
 }
 
 void KeyboardItem::onSymbolTriggered(const QString &symbol)

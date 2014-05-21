@@ -19,9 +19,14 @@ public:
 
 private slots:
 	void embedKeyboard();
+	void onFocusObjectChanged(QObject *focusObject);
+
+private:
+	void updateVisibility();
 
 private:
 	QQmlComponent *m_component;
+	QQuickItem *m_keyboard;
 	QPointer<QQuickView> m_focusWindow;
 }; /* -----  end of class InputContextEmbedded  ----- */
 

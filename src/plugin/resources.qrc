@@ -1,5 +1,15 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
 	<file alias="quickkeyboard/keyboard.qml">../../qml/keyboard.qml</file>
+	<file alias="quickkeyboard/Btn.qml">../../qml/Btn.qml</file>
+	<file alias="quickkeyboard/BtnPreview.qml">../../qml/BtnPreview.qml</file>
+	<file alias="quickkeyboard/modes/Standard.qml">../../qml/modes/Standard.qml</file>
+	<file alias="quickkeyboard/modes/Symbols.qml">../../qml/modes/Symbols.qml</file>
+	<file alias="gfx/quickkeyboard/bg.jpg">../../gfx/bg.jpg</file>
+	<file alias="gfx/quickkeyboard/keyboard_bg.png">../../gfx/keyboard_bg.png</file>
+	<file alias="gfx/quickkeyboard/panel_bg.png">../../gfx/panel_bg.png</file>
+	<file alias="gfx/quickkeyboard/preview_bg.png">../../gfx/preview_bg.png</file>
+	<file alias="gfx/quickkeyboard/btn.png">../../gfx/btn.png</file>
+	<file alias="gfx/quickkeyboard/btn_pressed.png">../../gfx/btn_pressed.png</file>
 </qresource>
 </RCC>

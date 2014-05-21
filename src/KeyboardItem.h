@@ -14,12 +14,13 @@ class KeyboardItem: public QQuickItem
 {
 Q_OBJECT
 Q_PROPERTY(QuickKeyboard::ModeItem* mode MEMBER m_mode WRITE setMode NOTIFY modeChanged DESIGNABLE false)
-Q_PROPERTY(QuickKeyboard::Dispatcher* dispatcher MEMBER m_dispatcher)
+Q_PROPERTY(QuickKeyboard::Dispatcher* dispatcher READ dispatcher MEMBER m_dispatcher)
 public:
 	explicit KeyboardItem(QQuickItem *parent = 0);
 	~KeyboardItem();
 
 	void setMode(ModeItem *mode);
+	Dispatcher *dispatcher() const;
 
 signals:
 	void modeChanged(ModeItem *mode);

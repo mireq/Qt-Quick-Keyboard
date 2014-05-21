@@ -4,7 +4,8 @@ HEADERS = \
 	$$PWD/GridLayoutItem.h \
 	$$PWD/KeyboardItem.h \
 	$$PWD/LayoutItem.h \
-	$$PWD/ModeItem.h
+	$$PWD/ModeItem.h \
+	$$PWD/register.h
 SOURCES = \
 	$$PWD/ButtonItem.cpp \
 	$$PWD/Dispatcher.cpp \

@@ -29,12 +29,14 @@ Item {
 
 	ShaderEffectSource {
 		id: contentBlurSource
+		visible: content != undefined
 		sourceItem: content
 		sourceRect: Qt.rect(preview.x + backgroundBorder, preview.y + keyboardOverlay.y + backgroundBorder, buttonContent.width, buttonContent.height)
 	}
 
 	FastBlur {
 		source: contentBlurSource
+		visible: content != undefined
 		anchors.fill: parent
 		anchors.margins: backgroundBorder
 		radius: 32
@@ -42,12 +44,14 @@ Item {
 
 	ShaderEffectSource {
 		id: keyboardBlurSource
+		visible: content != undefined
 		sourceItem: keyboard
 		sourceRect: Qt.rect(preview.x + backgroundBorder, preview.y + backgroundBorder, buttonContent.width + padding * 2, buttonContent.height + padding * 2)
 	}
 
 	FastBlur {
 		source: keyboardBlurSource
+		visible: content != undefined
 		anchors.fill: parent
 		anchors.margins: backgroundBorder
 		radius: 32
@@ -57,7 +61,7 @@ Item {
 		property int borderSize: backgroundBorder + 1
 
 		anchors.fill: parent
-		source: "qrc:/gfx/keyboard/preview_bg.png"
+		source: "qrc:/gfx/quickkeyboard/preview_bg.png"
 		border { left: borderSize; top: borderSize; right: borderSize; bottom: borderSize }
 	}
 
