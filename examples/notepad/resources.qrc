@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+	<file>notepad.qml</file>
+	<file>WindowsFrame.qml</file>
+	<file>WindowTitle.qml</file>
+</qresource>
+</RCC>

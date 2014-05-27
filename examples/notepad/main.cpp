@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	QGuiApplication app(argc, argv);
 	QQuickView view;
 	view.setResizeMode(QQuickView::SizeRootObjectToView);
-	view.setSource(QUrl("qrc:/example.qml"));
+	view.setSource(QUrl("qrc:/notepad.qml"));
 	view.show();
 	return app.exec();
 }

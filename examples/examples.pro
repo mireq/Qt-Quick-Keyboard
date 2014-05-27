@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
 SUBDIRS = \
 	keyboardview \
-	textedit \
+	notepad \

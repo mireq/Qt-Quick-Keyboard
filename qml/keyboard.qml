@@ -4,7 +4,7 @@ import "modes"
 
 import QtGraphicalEffects 1.0
 
-Rectangle {
+Item {
 	id: kbd
 	property bool isVisible: false
 	property rect geometry
