@@ -8,7 +8,7 @@ class InputContext: public QPlatformInputContext
 {
 Q_OBJECT
 public:
-	InputContext();
+	InputContext(const QString &mainFile);
 	~InputContext();
 
 	bool isValid() const;
@@ -21,8 +21,12 @@ public:
 signals:
 	void focusObjectChanged(QObject *object);
 
+protected:
+	QString mainFile() const;
+
 private:
 	bool m_visible;
+	QString m_mainFile;
 	QPointer<QObject> m_focusObject;
 }; /* -----  end of class InputContext  ----- */
 

@@ -10,7 +10,7 @@ class InputContextEmbedded: public InputContext
 {
 Q_OBJECT
 public:
-	InputContextEmbedded();
+	InputContextEmbedded(const QString &mainFile);
 	~InputContextEmbedded();
 
 	QRectF keyboardRect() const;

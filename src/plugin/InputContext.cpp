@@ -1,9 +1,13 @@
 #include "InputContext.h"
 
 
-InputContext::InputContext():
-	m_visible(false)
+InputContext::InputContext(const QString &mainFile):
+	m_visible(false),
+	m_mainFile(mainFile)
 {
+	if (m_mainFile.isEmpty()) {
+		m_mainFile = "qrc:/quickkeyboard/keyboard.qml";
+	}
 }
 
 InputContext::~InputContext()
@@ -46,5 +50,10 @@ void InputContext::setFocusObject(QObject *object)
 		}
 	}
 	emit focusObjectChanged(m_focusObject);
+}
+
+QString InputContext::mainFile() const
+{
+	return m_mainFile;
 }
 

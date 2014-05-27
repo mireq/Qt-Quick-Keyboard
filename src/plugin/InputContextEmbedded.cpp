@@ -9,8 +9,8 @@
 
 #include "InputContextEmbedded.h"
 
-InputContextEmbedded::InputContextEmbedded():
-	InputContext(),
+InputContextEmbedded::InputContextEmbedded(const QString &mainFile):
+	InputContext(mainFile),
 	m_component(0),
 	m_keyboard(0)
 {
@@ -32,7 +32,7 @@ void InputContextEmbedded::showInputPanel()
 	if (!m_component || !m_focusWindow) {
 		m_focusWindow = qobject_cast<QQuickView *>(QGuiApplication::focusWindow());
 		if (m_focusWindow) {
-			m_component = new QQmlComponent(m_focusWindow->engine(), QUrl("qrc:/quickkeyboard/keyboard.qml"), m_focusWindow->rootObject());
+			m_component = new QQmlComponent(m_focusWindow->engine(), QUrl(mainFile()), m_focusWindow->rootObject());
 			if (m_component->isLoading()) {
 				connect(m_component, SIGNAL(statusChanged(QDeclarativeComponent::Status)), this, SLOT(embedKeyboard()));
 			}
