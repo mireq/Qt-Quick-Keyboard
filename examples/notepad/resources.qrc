@@ -1,7 +1,10 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
 	<file>notepad.qml</file>
+	<file>keyboard.qml</file>
 	<file>WindowsFrame.qml</file>
 	<file>WindowTitle.qml</file>
+	<file alias="quickkeyboard/Btn.qml">Btn.qml</file>
+	<file alias="quickkeyboard/BtnPreview.qml">BtnPreview.qml</file>
 </qresource>
 </RCC>
