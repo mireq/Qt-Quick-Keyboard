@@ -84,6 +84,8 @@ void InputContextEmbedded::onFocusObjectChanged(QObject *focusObject)
 
 void InputContextEmbedded::updateVisibility()
 {
-	m_keyboard->setProperty("isVisible", isInputPanelVisible());
+	if (m_keyboard) {
+		m_keyboard->setProperty("isVisible", isInputPanelVisible());
+	}
 }
 
