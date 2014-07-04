@@ -144,7 +144,7 @@ Mode {
 	Btn { col: 18; row: 4; label: "ˇ"; id: caron; modifier: true; hasPreview: false; onActiveChanged: if (active) acute.active = false }
 
 	Btn { col:  0; row: 6; GridLayout.colSpan: 5; label: "12#"; onTriggered: symbolsModeSwitched(); hasPreview: false }
-	Btn { col:  5; row: 6; GridLayout.colSpan: 10; label: "Space"; hasPreview: false }
+	Btn { col:  5; row: 6; GridLayout.colSpan: 10; label: "Space"; hasPreview: false; symbols: " " }
 	Btn { col: 15; row: 6; label: shift.pressed ? "," : "."; symbols: btn_dot }
 	Btn { col: 17; row: 6; GridLayout.colSpan: 3; label: "⏎"; hasPreview: false; symbols: "\n" }
 }
