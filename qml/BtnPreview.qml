@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QuickKeyboard 1.0
 
 import QtGraphicalEffects 1.0
@@ -108,20 +108,29 @@ Item {
 			}
 		}
 
-		MouseArea {
+		MultiPointTouchArea {
 			id: buttonsArea
 			anchors.fill: parent
-			onPressed: preview.state = "symbols"
-			onReleased: btn.triggered()
-			onPositionChanged: {
-				var underMouseIndex = Math.floor(mouse.x * symbolsItems.count / chars.width);
-				if (underMouseIndex < 0) {
-					underMouseIndex = 0;
+			onPressed: {
+				preview.state = "symbols";
+			}
+			onReleased: {
+				if (touchPoints.length == 1) {
+					btn.triggered();
 				}
-				if (underMouseIndex >= symbolsItems.count) {
-					underMouseIndex = symbolsItems.count - 1;
+			}
+			onTouchUpdated: {
+				if (touchPoints.length > 0) {
+					var touchPoint = touchPoints[0];
+					var underMouseIndex = Math.floor(touchPoint.x * symbolsItems.count / chars.width);
+					if (underMouseIndex < 0) {
+						underMouseIndex = 0;
+					}
+					if (underMouseIndex >= symbolsItems.count) {
+						underMouseIndex = symbolsItems.count - 1;
+					}
+					currentSymbolIndex = underMouseIndex;
 				}
-				currentSymbolIndex = underMouseIndex;
 			}
 		}
 	}

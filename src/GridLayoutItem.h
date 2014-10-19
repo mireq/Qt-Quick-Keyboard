@@ -96,6 +96,7 @@ private:
 	bool m_autoSize;
 
 	QList<QPointF> m_touchPositions;
+	QList<QTouchEvent::TouchPoint> m_touchPoints;
 }; /* -----  end of class GridLayoutItem  ----- */
 
 } /* QuickKeyboard */

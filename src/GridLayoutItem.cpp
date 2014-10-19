@@ -41,7 +41,6 @@ GridLayoutItem::GridLayoutItem(QQuickItem *parent):
 	m_autoSize(true)
 {
 	setFlag(QQuickItem::ItemHasContents);
-	setKeepTouchGrab(true);
 	setAcceptedMouseButtons(Qt::LeftButton);
 	setZ(1);
 	m_touchPositions << QPointF();
@@ -110,17 +109,36 @@ void GridLayoutItem::redirectEventsToItem(QQuickItem *item)
 	if (!item) {
 		return;
 	}
-	ungrabMouse();
-	ungrabTouchPoints();
 
 	if (!m_touchPositions[0].isNull()) {
+		ungrabMouse();
 		QMouseEvent pressEvent(QMouseEvent::MouseButtonPress, QPointF(0, 0), Qt::LeftButton, Qt::LeftButton, 0);
 		window()->sendEvent(item, &pressEvent);
 		item->grabMouse();
 	}
+	if (!m_touchPoints.isEmpty()) {
+		ungrabTouchPoints();
+
+		QVector<int> ids;
+		foreach (const QTouchEvent::TouchPoint &point, m_touchPoints) {
+			ids << point.id();
+		}
+
+		QTouchEvent touchEvent(
+			QEvent::TouchBegin,
+			(QTouchDevice *)QTouchDevice::devices().first(),
+			Qt::NoModifier,
+			Qt::TouchPointPressed,
+			m_touchPoints
+		);
+
+		window()->sendEvent(item, &touchEvent);
+		item->grabTouchPoints(ids);
+	}
 
 	m_touchPositions.clear();
 	m_touchPositions << QPointF();
+	m_touchPoints.clear();
 }
 
 void GridLayoutItem::setColsSimple(int cols)
@@ -195,15 +213,16 @@ void GridLayoutItem::geometryChanged(const QRectF &newGeometry, const QRectF &ol
 void GridLayoutItem::touchEvent(QTouchEvent *event)
 {
 	QVector<QPointF> points;
-	points.reserve(event->touchPoints().length());
-	foreach (const QTouchEvent::TouchPoint &point, event->touchPoints()) {
-		points << point.scenePos();
+	m_touchPoints = event->touchPoints();
+	points.reserve(m_touchPoints.length());
+	foreach (const QTouchEvent::TouchPoint &point, m_touchPoints) {
+		points << point.pos();
 	}
 	setTouchPositions(points.toList());
 
 	QVector<QPointF> pointsAfterRelease;
-	pointsAfterRelease.reserve(event->touchPoints().length());
-	foreach (const QTouchEvent::TouchPoint &point, event->touchPoints()) {
+	pointsAfterRelease.reserve(m_touchPoints.length());
+	foreach (const QTouchEvent::TouchPoint &point, m_touchPoints) {
 		if (point.state() == Qt::TouchPointReleased) {
 			pointsAfterRelease << QPointF();
 			triggerOnPosition(point.pos());
