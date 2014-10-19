@@ -31,7 +31,7 @@ Item {
 		id: contentBlurSource
 		visible: content != undefined
 		sourceItem: content
-		sourceRect: Qt.rect(preview.x + backgroundBorder, preview.y + keyboardOverlay.y + backgroundBorder, buttonContent.width, buttonContent.height)
+		sourceRect: Qt.rect(preview.x + backgroundBorder, preview.y + Qt.inputMethod.keyboardRectangle.y + backgroundBorder, buttonContent.width + padding * 2, buttonContent.height + padding * 2)
 	}
 
 	FastBlur {
