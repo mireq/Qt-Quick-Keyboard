@@ -38,6 +38,15 @@ Item {
 			anchors.fill: parent
 			anchors.topMargin: 11
 			onStandardModeSwitched: keyboard.mode = standard
+			onSymbolsModeSwitched: keyboard.mode = symbols2
+		}
+
+		Symbols2 {
+			id: symbols2
+			anchors.fill: parent
+			anchors.topMargin: 11
+			onStandardModeSwitched: keyboard.mode = standard
+			onSymbolsModeSwitched: keyboard.mode = symbols
 		}
 	}
 

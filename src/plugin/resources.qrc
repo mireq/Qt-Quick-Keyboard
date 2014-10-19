@@ -5,6 +5,7 @@
 	<file alias="quickkeyboard/BtnPreview.qml">../../qml/BtnPreview.qml</file>
 	<file alias="quickkeyboard/modes/Standard.qml">../../qml/modes/Standard.qml</file>
 	<file alias="quickkeyboard/modes/Symbols.qml">../../qml/modes/Symbols.qml</file>
+	<file alias="quickkeyboard/modes/Symbols2.qml">../../qml/modes/Symbols2.qml</file>
 	<file alias="gfx/quickkeyboard/bg.jpg">../../gfx/bg.jpg</file>
 	<file alias="gfx/quickkeyboard/keyboard_bg.png">../../gfx/keyboard_bg.png</file>
 	<file alias="gfx/quickkeyboard/panel_bg.png">../../gfx/panel_bg.png</file>
