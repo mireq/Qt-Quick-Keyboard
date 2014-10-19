@@ -7,13 +7,18 @@ import QtGraphicalEffects 1.0
 Item {
 	id: kbd
 	property bool isVisible: false
-	property rect geometry
+	property rect geometry: Qt.rect(keyboardRect.x, keyboardRect.y, keyboardRect.width, kbd.height - keyboardRect.y)
 	width: parent.width; height: width / 3; anchors.bottom: parent.bottom
-	visible: isVisible
+
+	Item {
+		id: keyboardRect
+		width: parent.width; height: parent.height
+	}
+
 	Keyboard {
 		id: keyboard
 		mode: standard
-		anchors.fill: parent
+		anchors.fill: keyboardRect
 
 		BorderImage {
 			anchors.fill: parent
@@ -38,6 +43,26 @@ Item {
 
 	Item {
 		id: keyboardOverlay
-		anchors.fill: keyboard
+		anchors.fill: keyboardRect
 	}
+
+	states: [
+		State {
+			name: "visible"
+			when: isVisible
+			PropertyChanges { target: keyboardRect; y: 0  }
+		},
+		State {
+			name: "hidden"
+			when: !isVisible
+			PropertyChanges { target: keyboardRect; y: kbd.height  }
+		}
+	]
+
+	transitions: [
+		Transition {
+			to: "visible"
+			NumberAnimation { properties: "y" }
+		}
+	]
 }

@@ -1,4 +1,5 @@
 #include <QGuiApplication>
+#include <QMetaObject>
 #include <QQmlComponent>
 #include <QQuickItem>
 #include <QRectF>
@@ -24,7 +25,10 @@ InputContextEmbedded::~InputContextEmbedded()
 
 QRectF InputContextEmbedded::keyboardRect() const
 {
-	return QRectF();
+	if (!m_keyboard) {
+		return QRectF();
+	}
+	return m_keyboard->property("geometry").toRectF();
 }
 
 void InputContextEmbedded::showInputPanel()
@@ -72,6 +76,7 @@ void InputContextEmbedded::embedKeyboard()
 	updateVisibility();
 
 	m_component->completeCreate();
+	connect(m_keyboard, SIGNAL(geometryChanged()), this, SLOT(onKeyboardRectChanged()));
 }
 
 void InputContextEmbedded::onFocusObjectChanged(QObject *focusObject)
@@ -89,3 +94,7 @@ void InputContextEmbedded::updateVisibility()
 	}
 }
 
+void InputContextEmbedded::onKeyboardRectChanged()
+{
+	emitKeyboardRectChanged();
+}

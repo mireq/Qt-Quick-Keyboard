@@ -6,7 +6,13 @@ Rectangle {
 	color: "#3a6ea5"
 
 	WindowsFrame {
-		anchors{ fill: parent; margins: 10 }
+		anchors {
+			left: parent.left
+			top: parent.top
+			right: parent.right
+			bottom: keyboardArea.top
+			margins: 10
+		}
 		WindowTitle {
 			id: windowTitle
 			text: "Notepad.exe"
@@ -35,6 +41,12 @@ Rectangle {
 				}
 			}
 		}
+	}
+
+	Item {
+		id: keyboardArea
+		anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+		height: Qt.inputMethod === undefined ? 1 : Qt.inputMethod.keyboardRectangle.height
 	}
 }
 

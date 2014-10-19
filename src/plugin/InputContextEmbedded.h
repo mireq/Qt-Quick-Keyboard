@@ -20,6 +20,7 @@ public:
 private slots:
 	void embedKeyboard();
 	void onFocusObjectChanged(QObject *focusObject);
+	void onKeyboardRectChanged();
 
 private:
 	void updateVisibility();
