@@ -45,12 +45,26 @@ Button {
 		BtnPreview {hasPreview: btn.hasPreview}
 	}
 
-	onMouseDownChanged: {
-		if (mouseDown) {
+	Timer {
+		id: createPreviewTimer
+		interval: 40
+
+		onTriggered: {
 			buttonPreview = buttonPreviewComponent.createObject(keyboardOverlay, {"btn": btn, "content": typeof(content) == "undefined" ? undefined: content, "keyboard": keyboard});
 		}
+	}
+
+	onMouseDownChanged: {
+		if (mouseDown) {
+			//buttonPreview = buttonPreviewComponent.createObject(keyboardOverlay, {"btn": btn, "content": typeof(content) == "undefined" ? undefined: content, "keyboard": keyboard});
+			createPreviewTimer.restart();
+		}
 		else {
-			buttonPreview.destroy();
+			if (buttonPreview !== null) {
+				buttonPreview.destroy();
+				buttonPreview = null;
+			}
+			createPreviewTimer.stop();
 		}
 	}
 }
