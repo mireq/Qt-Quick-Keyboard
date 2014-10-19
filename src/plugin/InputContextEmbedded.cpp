@@ -73,6 +73,11 @@ void InputContextEmbedded::embedKeyboard()
 	m_keyboard->setProperty("parent", QVariant::fromValue(qobject_cast<QQuickItem *>(m_focusWindow->rootObject())));
 	m_keyboard->setParent(rootObject);
 	m_keyboard->setParentItem(rootObject);
+
+	QQuickItem *content = rootObject->findChild<QQuickItem *>("content");
+	if (content) {
+		m_keyboard->setProperty("content", QVariant::fromValue<QQuickItem *>(content));
+	}
 	updateVisibility();
 
 	m_component->completeCreate();
