@@ -50,6 +50,10 @@ Button {
 		interval: 40
 
 		onTriggered: {
+			if (buttonPreview !== null) {
+				buttonPreview.destroy();
+				buttonPreview = null;
+			}
 			buttonPreview = buttonPreviewComponent.createObject(keyboardOverlay, {"btn": btn, "content": typeof(content) == "undefined" ? undefined: content, "keyboard": keyboard});
 		}
 	}
@@ -60,11 +64,11 @@ Button {
 			createPreviewTimer.restart();
 		}
 		else {
+			createPreviewTimer.stop();
 			if (buttonPreview !== null) {
 				buttonPreview.destroy();
 				buttonPreview = null;
 			}
-			createPreviewTimer.stop();
 		}
 	}
 }
