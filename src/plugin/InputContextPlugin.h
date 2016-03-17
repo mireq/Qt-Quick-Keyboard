@@ -7,7 +7,7 @@
 class QUICKKEYBOARD_EXPORT InputContextPlugin: public QPlatformInputContextPlugin
 {
 Q_OBJECT
-Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QPlatformInputContextFactoryInterface" FILE "kbd.json")
+Q_PLUGIN_METADATA(IID QPlatformInputContextFactoryInterface_iid FILE "kbd.json")
 public:
 	QPlatformInputContext *create(const QString &system, const QStringList &paramList);
 }; /* -----  end of class InputContextPlugin  ----- */
